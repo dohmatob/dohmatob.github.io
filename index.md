@@ -14,5 +14,5 @@ Before that, I studied science at the Ecole Polytechnique, and got specialized i
 <div style='text-align: center'>
 <a class="twitter-timeline" data-height="400" data-width="400"
 data-chrome="noscrollbar nofooter"
- href="https://twitter.com/arthurmensch">Recent tweets</a></div>
+ href="https://twitter.com/dohmatobelvis">Recent tweets</a></div>
  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

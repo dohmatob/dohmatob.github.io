@@ -7,12 +7,13 @@ order: 1
 <img style="float: left; margin-right: 2em;" width="120px" src="/assets/photo3.jpg" />
 
 <p>
-Hi there. I'm Elvis. Welcome to my blog. I'm a PhD Student in Applied Math / Computer science in Paris. I'm kindly paid by INRIA (a french public research
+Hi there. Welcome to my blog. I'm a PhD Student in Computer
+Science in Paris. I'm kindly paid by INRIA (a french public research
 institute). I'm interested in mathematics, machine learnine, convex
 optimization, games theory, and have a growing interest in neuroscience.
 </p>
 <p>
-You can find CV <a href="https://drive.google.com/file/d/0B-njZxsmwjYNRExmaFJxU3J6aEU/view?usp=sharing">here</a>.
+You can find my CV <a href="https://drive.google.com/file/d/0B-njZxsmwjYNRExmaFJxU3J6aEU/view?usp=sharing">here</a>.
 </p>
 
 <div style='text-align: center'>

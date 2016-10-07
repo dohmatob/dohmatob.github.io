@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "Learning brain regions from large-scale online structured sparse DL"
+date:   2016-10-07 14:01
+categories: research
+images:
+
+ - url: /assets/figures/nips2016.png
+ - alt: Sobolev regularization meets online DL
+ - title: Sobolev regularization meets online DL
+
+---

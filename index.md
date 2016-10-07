@@ -8,9 +8,12 @@ order: 1
 
 <p>
 Hi there. Welcome to my blog. I'm a PhD Student in Computer
-Science in Paris. I'm kindly paid by INRIA (a french public research
-institute). I'm interested in mathematics, machine learnine, convex
-optimization, games theory, and have a growing interest in neuroscience.
+Science in Paris.  I'm part
+of the <a href="https://team.inria.fr/parietal/">
+Parietal Team, INRIA / CEA</a>.  The PhD thesis will be defended by the end
+of 2017. My interests include
+mathematics, machine learnine, convex optimization, games theory,
+and neuroscience.
 </p>
 <p>
 You can find my CV <a href="https://drive.google.com/file/d/0B-njZxsmwjYNRExmaFJxU3J6aEU/view?usp=sharing">here</a>.

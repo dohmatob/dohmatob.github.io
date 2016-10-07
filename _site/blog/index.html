@@ -23,6 +23,8 @@
   ga('create', 'UA-79657005-1', 'auto');
   ga('send', 'pageview');
   </script>
+
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
 
 
@@ -100,13 +102,26 @@
     <li>
       <span class="post-meta">Oct 7, 2016</span>
       <h2>
-        <a class="post-link" href="/research/2016/10/07/nash.html">A simple algorithm for computing Nash-equilibria in incomplete information games</a>
+        <a class="post-link" href="/research/2016/10/07/nash.html">Computing Nash-equilibria in incomplete information games</a>
       </h2>
       
       <img style='width:80%;display:block;margin:auto;margin-bottom:2em;'
-src="/assets/figures/opt2016_algo.png" alt="" title="">
+src="/assets/figures/opt2016_res.png" alt="" title="">
 
-      
+      <p><b>Abstract:</b>
+We present a simple projection-free primal-dual algorithm for computing approxi-
+mate Nash-equilibria in two-person zero-sum sequential games with incomplete
+information and perfect recall (like Texas Hold’em Poker). Our algorithm is numer-
+ically stable, performs only basic iterations (i.e matvec multiplications, clipping,
+etc., and no calls to external first-order oracles, no matrix inversions, etc.), and is
+applicable to a broad class of two-person zero-sum games including simultaneous
+games and sequential games with incomplete information and perfect recall. The ap-
+plicability to the latter kind of games is thanks to the sequence-form representation
+which allows one to encode such a game as a matrix game with convex polytopial
+strategy profiles. We prove that the number of iterations needed to produce a Nash-
+equilibrium with a given precision is inversely proportional to the precision. We
+present experimental results on matrix games on simplexes and Kuhn Poker.</p>
+
 
     </li>
   
@@ -119,7 +134,19 @@ src="/assets/figures/opt2016_algo.png" alt="" title="">
       <img style='width:80%;display:block;margin:auto;margin-bottom:2em;'
 src="/assets/figures/nips2016.png" alt="" title="">
 
-      
+      <p><b>Abstract:</b>
+  We propose a multivariate online dictionary-learning
+  method for obtaining decompositions of brain
+images with structured and sparse components (aka atoms). Sparsity is
+to be understood in the usual sense: the dictionary atoms are
+constrained to contain mostly zeros. This is imposed via an $\ell_1$-norm
+constraint. By “structured”, we mean that the atoms are piece-wise
+smooth and compact, thus making up blobs, as opposed to scattered
+patterns of activation. We propose to use a Sobolev (Laplacian)
+penalty to impose this type of structure.
+Combining the two penalties, we obtain decompositions that properly
+delineate brain structures from functional images.</p>
+
 
     </li>
   

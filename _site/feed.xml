@@ -5,13 +5,29 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 07 Oct 2016 14:54:47 +0200</pubDate>
-    <lastBuildDate>Fri, 07 Oct 2016 14:54:47 +0200</lastBuildDate>
+    <pubDate>Fri, 07 Oct 2016 18:20:24 +0200</pubDate>
+    <lastBuildDate>Fri, 07 Oct 2016 18:20:24 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
-        <title>A simple algorithm for computing Nash-equilibria in incomplete information games</title>
-        <description>
+        <title>Computing Nash-equilibria in incomplete information games</title>
+        <description>&lt;p&gt;&lt;b&gt;Abstract:&lt;/b&gt;
+We present a simple projection-free primal-dual algorithm for computing approxi-
+mate Nash-equilibria in two-person zero-sum sequential games with incomplete
+information and perfect recall (like Texas Hold’em Poker). Our algorithm is numer-
+ically stable, performs only basic iterations (i.e matvec multiplications, clipping,
+etc., and no calls to external first-order oracles, no matrix inversions, etc.), and is
+applicable to a broad class of two-person zero-sum games including simultaneous
+games and sequential games with incomplete information and perfect recall. The ap-
+plicability to the latter kind of games is thanks to the sequence-form representation
+which allows one to encode such a game as a matrix game with convex polytopial
+strategy profiles. We prove that the number of iterations needed to produce a Nash-
+equilibrium with a given precision is inversely proportional to the precision. We
+present experimental results on matrix games on simplexes and Kuhn Poker.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/figures/opt2016_algo.png&quot; /&gt;
+&lt;img src=&quot;/assets/figures/opt2016_res.png&quot; /&gt;
+Read the full paper on &lt;a href=&quot;https://arxiv.org/abs/1507.07901&quot;&gt;arXiv&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Fri, 07 Oct 2016 14:25:00 +0200</pubDate>
         <link>/research/2016/10/07/nash.html</link>
@@ -24,7 +40,27 @@
     
       <item>
         <title>Learning brain regions from large-scale online structured sparse DL</title>
-        <description>
+        <description>&lt;p&gt;&lt;b&gt;Abstract:&lt;/b&gt;
+  We propose a multivariate online dictionary-learning
+  method for obtaining decompositions of brain
+images with structured and sparse components (aka atoms). Sparsity is
+to be understood in the usual sense: the dictionary atoms are
+constrained to contain mostly zeros. This is imposed via an $\ell_1$-norm
+constraint. By “structured”, we mean that the atoms are piece-wise
+smooth and compact, thus making up blobs, as opposed to scattered
+patterns of activation. We propose to use a Sobolev (Laplacian)
+penalty to impose this type of structure.
+Combining the two penalties, we obtain decompositions that properly
+delineate brain structures from functional images.&lt;/p&gt;
+
+&lt;p&gt;This non-trivially extends the
+online dictionary-learning  work of Mairal et
+al. (2010), at the price of only a factor of 2 or 3 on the overall
+running time. Just like the Mairal et al. (2010) reference method, the
+online nature of our proposed algorithm allows it to scale to
+arbitrarily sized datasets. Experiments on brain data show that our proposed method extracts structured and denoised dictionaries that are more intepretable and better capture inter-subject variability in small medium, and large-scale regimes alike, compared to state-of-the-art models.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/figures/nips2016.png&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 07 Oct 2016 14:01:00 +0200</pubDate>
         <link>/research/2016/10/07/ssodl.html</link>

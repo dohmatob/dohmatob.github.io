@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arthur Mensch</title>
+    <description>Machine learning / Neuro-imaging / Data</description>
+    <link>http://amensch.fr/</link>
+    <atom:link href="http://amensch.fr/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 07 Oct 2016 10:07:33 +0200</pubDate>
+    <lastBuildDate>Fri, 07 Oct 2016 10:07:33 +0200</lastBuildDate>
+    <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>Massive Matrix Factorization for fMRI and Recommender Systems</title>
+        <description>&lt;p&gt;As ICML approaches, I will give a quick overview of our work on efficient
+matrix factorization for very large datasets. Our focus was to scale &lt;em&gt;matrix
+factorization&lt;/em&gt; techniques for functional MRI, a domain where data to
+decompose is now at terabyte scale. Along the way, we also designed a encouraging proof-of-concept
+experiment for collaborative filtering.&lt;/p&gt;
+
+&lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]],
+  }
+});
+MathJax.Hub.Configured();
+&lt;/script&gt;
+
+&lt;p&gt;We’ll start by reviewing matrix factorization techniques for interpretable data
+decomposition. &lt;script type=&quot;math/tex&quot;&gt;\def\EE{\mathbb E}    \def\RR{\mathbb R}    \def\PP{\mathbb P}    \def\A{\mathbf A} \def\D{\mathbf D} \def\M{\mathbf M} \def\X{\mathbf X} \def\b{\mathbf b} \def\a{\mathbf a} \def\d{\mathbf d} \def\x{\mathbf x} \def\balpha{\boldsymbol{\alpha}} \def\argmin{\text{argmin}}&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;understanding-data-with-matrix-factorization&quot;&gt;Understanding data with matrix factorization&lt;/h2&gt;
+
+&lt;p&gt;Unsupervised learning aim at finding patterns in a sequence of n samples
+$(x_t)t$, living in a $p$ dimensional space. Typically, this involve finding a few statistics that describe data in a &lt;em&gt;compressed&lt;/em&gt; manner. Our dataset can be seen as a large matrix $\X \in \RR^{n \times p}$. Factorizing such matrix has proven a very flexible manner to extract interesting pattern. Namely, we want to find two &lt;em&gt;small&lt;/em&gt; matrices $\D$ (the &lt;em&gt;dictionary&lt;/em&gt;) and $\A$ (the &lt;em&gt;code&lt;/em&gt;) with $k$ columns/rows whose product approximates $\X$&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/drawings/poster_model_sparse.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: 0 auto;&quot; title=&quot;Model&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Small can mean several things here : we may impose $k$ to be small, which amounts to search for a low rank representation of the matrix $\X$, and thus a subspace of $\RR^p$ that approximately include all samples. For interpretability, it can be useful, as in the drawing above, to impose sparsity on $\D$ – this is what we’ll do in fMRI.&lt;/p&gt;
+
+&lt;p&gt;In other settings, we may have $k$ large but impose $\A$ &lt;em&gt;sparse&lt;/em&gt;, leading to an overcomplete dictionary learning setting, that generalize the k-means algorithm. This setting won’t interest us today, although we use its terminology.&lt;/p&gt;
+
+&lt;h3 id=&quot;fmri-example&quot;&gt;fMRI example&lt;/h3&gt;
+
+&lt;p&gt;We can already instantiate matrix factorization for fMRI as this will make things clearer. We study resting-state functional imaging : 500 subjects go four times in a scanner, to get their brain activity recorded during 15 minutes while at rest – roughly, a 3D image of their brain activity is acquired every second. This yields 2 millions 3D images of brain activity, each of them with 200 000 &lt;em&gt;voxels&lt;/em&gt; – &lt;strong&gt;2TB&lt;/strong&gt; of dense data. We want to extract spatial activity maps that constitute a good basis for these images:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/drawings/poster_fmri_dl_flat.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: 0 auto;&quot; title=&quot;Model&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;What we are most interested in is the dictionary $D$, that holds, say, 70 sparse spatial maps. We expect those to capture functional networks, segmenting the auditory, visual, motor cortex, etc. Sparsity and low-rank are key for pattern discovery: we want to find few maps, with few activated regions.&lt;/p&gt;
+
+&lt;h2 id=&quot;matrix-factorization-for-large-datasets&quot;&gt;Matrix factorization for large datasets&lt;/h2&gt;
+
+&lt;p&gt;A little math should be introduced to better grasp our problem. Decomposing $\X$ into the product $\D \A$ can be done by solving an optimization problem (see &lt;strong&gt;[Olshausen ‘97]&lt;/strong&gt; for the initial problem setting):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\min_{\D \in \mathcal{C}, \A \in \RR^{k\times p}} \Vert \X - \D \A \Vert_2^2 + \lambda \Omega(\balpha)&lt;/script&gt;
+
+&lt;p&gt;where structure and sparsity can be imposed via constraints (convex set $\mathcal{C}$)
+and penalties. For example, we may impose dictionary columns to live in $\ell_1$ balls, to get a sparse dictionary.&lt;/p&gt;
+
+&lt;p&gt;Solving this minimization problem is where all the honey is : let’s see what methods can be used when $X$ grows large.&lt;/p&gt;
+
+&lt;p&gt;A naive solver alternatively minimize the loss function over $\A$ and $\D$. Meaning, given $\X$ and $\A$, find the best $\D$, given $\X$ and $\D$, find the best $\A$, and repeat. If we look at it from a dictionary oriented point of view, we define&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\A(\D) = \argmin_{\A \in \RR^{k \times n}} \Vert \X - \D \A \Vert_F^2  + \lambda \Omega(\A)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\balpha_i(\D) = \argmin_{\A \in \RR^{k \times n}} \Vert \x_i - \D \balpha_i \Vert_F^2  + \lambda \Omega(\balpha_i)&lt;/script&gt;
+
+&lt;p&gt;where the second equality has used the colummns $(\balpha_i)$ of $\A$ – we’ll see why in a minute. The naive algorithm simply consist in doing&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\D_t &amp;= \argmin_{\D \in \mathcal{C}} \Vert \X - \D \A(\D_{t-1}) \Vert_F^2 \\
+&amp;= \min_{D} \sum_{i=1}^n \Vert \x_i - \D \balpha_i(\D_{n-1})) \Vert_F^2
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;This takes time, as the whole data $\X$ is loaded at each iteration. In fact, it quickly becomes intractable: beyond 1 million entry in $\X$, it already takes hours.&lt;/p&gt;
+
+&lt;h3 id=&quot;going-online&quot;&gt;Going online&lt;/h3&gt;
+
+&lt;p&gt;A very efficient way to get past this intractability was introduced by &lt;strong&gt;[Mairal ‘10]&lt;/strong&gt;. Computing $\A$ for the whole dataset is costly, and overkill for a single step of improving the dictionary: we can maintain an approximation of this code by streaming the data and optimizing the dictionary along the stream.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/drawings/poster_model_sparse_online.png&quot; width=&quot;80%&quot; style=&quot;display: block; margin: 0 auto;&quot; title=&quot;Model&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As the drawing above indicates, we look at data sample $x_t$ after
+sample. At iteration $t$t, we use the current dictionary to compute the associated loadings
+$\balpha_t$:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\balpha_t(\D) = \argmin_{\A \in \RR^{k \times n}} \Vert \x_t - \D_{t-1} \balpha_t \Vert_F^2  + \lambda \Omega(\balpha_t)&lt;/script&gt;
+
+&lt;p&gt;We then solve, at each iteration&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\D_t = \argmin_{\D \in \mathcal{C}} \sum_{i=1}^t \Vert \x_i - \D \balpha_i \Vert_F^2&lt;/script&gt;
+
+&lt;p&gt;This look very much like the original update, except we use outdated
+$\balpha_t$ to approximate our objective function. The essential idea here is
+start solving the problem with a very inaccurate approximation of it, and
+improve it by looking at more data.&lt;/p&gt;
+
+&lt;p&gt;A single iteration of the algorithm depend on $p$ but no longer on $n$, and the
+algorithm empirically converges in a few epochs on data. This is very efficient
+when data dimension $p$ is reasonable – as a matter of fact the online algorithm
+was initially designed to handle large sequences of 16x16 image patches – &lt;strong&gt;a
+very low p compared to fMRI setting&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;handling-large-sample-dimension&quot;&gt;Handling large sample dimension&lt;/h2&gt;
+
+&lt;p&gt;This is where our contribution begins. We want to provide an algorithm that
+ scales not only in the number of samples but also in the sample dimension. To
+ scale in the number of samples, we went from using $\X$ to using $\x_t$ at
+ each iteration, allowing around n time faster iterations. Here, $\x_t$ is
+ still too large, and &lt;strong&gt;we want to acquire information even faster&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;This is where we introduce &lt;em&gt;random subsampling&lt;/em&gt;: can we improve the dictionary
+with only a &lt;em&gt;fraction&lt;/em&gt; of a sample at each iteration. The answer is yes, as we’ll
+now show.  The algorithm we propose loads a fraction of a sample $\x_t$ at each
+iteration and use it to update the approximation of the optimization problem.
+The fraction is different at each iteration: this way, we are able to obtain
+information about the whole feature space, in a stochastic manner. We go a step
+beyond in randomness:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/drawings/poster_next_level.png&quot; alt=&quot;Random subsampling&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;$\M_t \x_t$ corresponds to a subsampling of $\X_t$, choosing $\M_t$ to be a $[0, 1]$ diagonal matrix with, say, 90% zeros.&lt;/p&gt;
+
+&lt;p&gt;The whole difficulty lies in constructing the right approximations so that the
+problem we solve at each iteration looks more and more like the original
+optimization problem – just like the online algorithm does.&lt;/p&gt;
+
+&lt;p&gt;The online algorithm relies on a few low dimensional statistics that
+ sufficiently describe the approximate problem. These are updated in a
+ $\mathcal{O}(p)$ cost – ensuring scalable single iteration, and hence the online magic.&lt;/p&gt;
+
+&lt;p&gt;Our objective here is to speed up iteration of a constant factor, that
+corresponds to the factor of dimension reduction. We must therefore ensure that
+everything we do at iteration t scales in $\mathcal{O}(s)$, where $s$ is the &lt;em&gt;reduced&lt;/em&gt; dimension.
+That way, we gain a constant factor (from 2 to 12 on large datasets, as we’ll
+see) on single iteration complexity (&lt;em&gt;computational speed-up&lt;/em&gt;), and we expect not to
+loose it because of the approximation we introduce (&lt;em&gt;approximation errance&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;This is because &lt;strong&gt;very large datasets have often many redundancies&lt;/strong&gt;, accessing
+a stochastic part of sample does not reduce much the information acquired at
+each iteration.  As we’ll see, on large datasets, the balance is therefore very
+much on the side of single iteration computational speed-up.&lt;/p&gt;
+
+&lt;p&gt;The constraint we introduce on iteration complexity restrains much what we are able to do. To sum up, we have to adapt the three steps of the online algorithm
+- Computing the code from past iterate : we rely on a &lt;em&gt;sketched&lt;/em&gt; version of code computation, where we only look at $\M_t$ features of $\x_t$ and $\D_{t-1}$&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}\balpha_t(\D) &amp;= \argmin_{\A \in \RR^{k \times n}} \Vert \M_t(\x_t - \D_{t-1} \balpha_t) \Vert_F^2\\
+&amp;\phantom{=} +\lambda \frac{s}{p} \Omega(\balpha)\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Aggregating this partial sample and code in an approximative objective, as we do by summing $t$ factors in the online algorithm. We have to do this in a clever manner so that we only update statistics of size in s and not in p. This includes keeping tracks of the number of time we saw a feature in the past.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Updating the dictionary: we can’t update the full $\D$ at each iteration as this is $\mathcal{O}(p)$ costly. It makes sense to update the features of the dictionary atoms that were seen in $\M_t$, ensuring that $\D$ remains in $\mathcal{C}$ by projection.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I skipped the math in the two last parts, but you can access it in more detail &lt;a href=&quot;docs/presentations/icml_presentation.pdf&quot;&gt;on these slides&lt;/a&gt;. You will also find a detailed comparison between our algorithm and the original online algorithm.&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;Let’s get to the most important part: do we get desired speed-up, is the dictionary
+we compute as good as those we would obtain with previous algorithms ?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;On fMRI, we can push the reduction up to x12 and obtain x10 speed-up compared to the online algorithm&lt;/strong&gt;. Remember that a single pass on the data would take 235h using the online algorithm. We’ll use the obtained maps as a baseline. Maps are blobish, with noiseless contours.&lt;/p&gt;
+
+&lt;p&gt;In no more than 10h, our algorithm, using a 12-fold reduction, is able to recover maps that are almost as epxloitable as the baseline one. In comparison, the original algorithm stopped after 10h yields very poor results: noisy maps with many blobs.&lt;/p&gt;
+
+&lt;p&gt;Displaying the contour of these maps makes it clearly appear:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/figures/brains.png&quot; alt=&quot;Brains&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can quantify the speed-up we obtain by looking at convergence curve, that decribe how good the dictionary perform as a basis on a test set, against time spent in computation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/figures/bench.png&quot; width=&quot;70%&quot; style=&quot;display: block; margin: 0 auto;&quot; title=&quot;Bench&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Convergence is obtained x10 more quickly&lt;/strong&gt; with a 12 times reduction.
+This is very valuable for practioners ! Information is indeed acqired faster,
+as the speed-up we obtained is close to the reduction we imposed.&lt;/p&gt;
+
+&lt;h2 id=&quot;collaborative-filtering&quot;&gt;Collaborative filtering&lt;/h2&gt;
+
+&lt;p&gt;Our setting imposes masks on data to speed up learning. Quite interestingly,
+collaborative filtering brings us a setting where we can only acces &lt;em&gt;masked&lt;/em&gt;
+data, that corresponds to, for example, the few movies that a user has rated.
+Matrix factorization is there used to reconstructe the incomplete matrix $\X$ (see, for instance &lt;strong&gt;[Szabo ‘11’]&lt;/strong&gt;).
+To evaluate the performance of our model, we look at rating prediction on a
+test set. We compare our algorithm with a fast coordiate descent solver from
+&lt;a href=&quot;http://github.com/mathieublondel/spira&quot;&gt;spira&lt;/a&gt;, that does not involve setting any
+hyperparmeter – our algorithm is, unlike SGD, not very dependant on
+hyperparameters. We get good results on large datasets (Netflix,
+Movielens 10M), as these benches show. On &lt;strong&gt;Netflix&lt;/strong&gt;, our algorithm is &lt;strong&gt;7x faster&lt;/strong&gt; than the coordinate descent solver, which was the fastest well-packaged collaborative filtering algorithm we could find.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/figures/rec_bench.png&quot; width=&quot;100%&quot; style=&quot;display: block; margin: 0 auto;&quot; title=&quot;Collaborative filtering benches&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Our model is very simple (minimization of an $\ell_2$ loss), and we do not get
+state of the art prediction on Netflix. However, this experiment shows that our
+algorithm is able to learn a decomposition even with non random masks, and
+demonstrate the efficiency of imposing the complexity constraints explained
+above.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Leveraging random subsampling with online learning is thus a very efficient manner to perform matrix factorization on datasets large in both direction. Our algorithm had no convergence guarantee at the time of contribution (February), but we now have a slightly adapted algorithm that converges with the same guarantee as in the original online matrix factorization paper – we rely on the stochastic majorization minimization framework &lt;strong&gt;[Mairal ‘13]&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://github.com/arthurmensch/modl&quot;&gt;A Python package&lt;/a&gt; is available for reproducibility. We hope to integrate this algorithm in more well-known library in the long term.&lt;/p&gt;
+
+&lt;p&gt;I hope that this post was readable enough and has interested you. You’ll find
+more details in our &lt;a href=&quot;https://hal.archives-ouvertes.fr/hal-01308934&quot;&gt;paper&lt;/a&gt;,
+&lt;a href=&quot;/docs/posters/icml_poster.pdf&quot;&gt;poster&lt;/a&gt; and &lt;a href=&quot;/docs/presentations/icml_presentation.pdf&quot;&gt;slides&lt;/a&gt;. I
+will present this work in ICML New York Monday June 20th at 11h45. Discussions are
+welcome !&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;[Mairal ‘10]&lt;/strong&gt; Mairal, Julien, Francis Bach, Jean Ponce, and Guillermo Sapiro. “Online Learning for Matrix Factorization and Sparse Coding.” The Journal of Machine Learning Research, 2010.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;[Mairal ‘13]&lt;/strong&gt; Mairal, Julien. “Stochastic Majorization-Minimization Algorithms for Large-Scale Optimization.” In Advances in Neural Information Processing Systems, 2013.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;[Olshausen ‘97]&lt;/strong&gt; Olshausen, Bruno A., and David J. Field. “Sparse Coding with an Overcomplete Basis Set: A Strategy Employed by V1?” Vision Research, 1997.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;[Szabo ‘11]&lt;/strong&gt; Szabó, Zoltán, Barnabás Póczos, and András Lorincz. “Online Group-Structured Dictionary Learning.” In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, 2011.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;See also &lt;a href=&quot;/docs/presentations/icml_presentation.pdf&quot;&gt;these slides&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 10 Jun 2016 10:19:34 +0200</pubDate>
+        <link>http://amensch.fr/research/2016/06/10/massive-matrix-factorization-for-fMRI-and-recommender-systems.html</link>
+        <guid isPermaLink="true">http://amensch.fr/research/2016/06/10/massive-matrix-factorization-for-fMRI-and-recommender-systems.html</guid>
+        
+        
+        <category>research</category>
+        
+      </item>
+    
+  </channel>
+</rss>

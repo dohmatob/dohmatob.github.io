@@ -5,8 +5,8 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 08 Oct 2016 10:27:08 +0200</pubDate>
-    <lastBuildDate>Sat, 08 Oct 2016 10:27:08 +0200</lastBuildDate>
+    <pubDate>Sun, 09 Oct 2016 13:15:14 +0200</pubDate>
+    <lastBuildDate>Sun, 09 Oct 2016 13:15:14 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -40,8 +40,8 @@ Read the full paper on &lt;a href=&quot;https://arxiv.org/abs/1507.07901&quot;&g
     
       <item>
         <title>Learning brain regions from large-scale online structured sparse DL</title>
-        <description>&lt;p&gt;&lt;em&gt;&lt;b&gt;Abstract.&lt;/b&gt;&lt;/em&gt;
-  We propose a multivariate online dictionary-learning
+        <description>&lt;p&gt;In our NIPS 2016, &lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;paper&lt;/a&gt;,
+ we propose a multivariate online dictionary-learning
   method for obtaining decompositions of brain
 images with structured and sparse components (aka atoms). Sparsity is
 to be understood in the usual sense: the dictionary atoms are
@@ -57,7 +57,11 @@ online dictionary-learning  work of Mairal et
 al. (2010), at the price of only a factor of 2 or 3 on the overall
 running time. Just like the Mairal et al. (2010) reference method, the
 online nature of our proposed algorithm allows it to scale to
-arbitrarily sized datasets. Experiments on brain data show that our proposed method extracts structured and denoised dictionaries that are more intepretable and better capture inter-subject variability in small medium, and large-scale regimes alike, compared to state-of-the-art models.&lt;/p&gt;
+arbitrarily sized datasets. Experiments on brain data show that our proposed method extracts structured and
+denoised dictionaries that are more intepretable and better capture inter-subject variability in small medium,
+and large-scale regimes alike, compared to state-of-the-art models.&lt;/p&gt;
+
+&lt;p&gt;In this blog post, I’ll throw some light on the main ideas.&lt;/p&gt;
 
 &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
 
@@ -72,10 +76,7 @@ MathJax.Hub.Configured();
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\def\EE{\mathbb E}    \def\RR{\mathbb R}    \def\PP{\mathbb P}    \def\A{\mathbf A} \def\D{\mathbf D} \def\M{\mathbf M} \def\X{\mathbf X} \def\b{\mathbf b} \def\a{\mathbf a} \def\d{\mathbf d} \def\x{\mathbf x} \def\balpha{\boldsymbol{\alpha}} \def\argmin{\text{argmin}} \def\Id{\mathbf I} \def\1{\mathbf 1} \def\x{\mathbf x}  \def\y{\mathbf y}  \def\u{\mathbf u}  \def\v{\mathbf v}  \def\X{\mathbf X}  \def\Y{\mathbf Y}  \def\Z{\mathbf Z}  \def\A{\mathbf A}  \def\B{\mathbf B} \def\U{\mathbf U}  \def\V{\mathbf V}&lt;/script&gt;
 
-&lt;p&gt;Full paper &lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;here&lt;/a&gt;, accepted
-for NIPS 2016.&lt;/p&gt;
-
-&lt;h1 id=&quot;the-problem&quot;&gt;The problem&lt;/h1&gt;
+&lt;h2 id=&quot;the-problem&quot;&gt;The problem&lt;/h2&gt;
 &lt;p&gt;Consider a stack $\X
 \in \mathbb R^{n \times p}$ of $n$ subject-level brain images
 $\X_1,\X_2,\ldots,\X_n$ each of shape $n_1 \times n_2 \times n_3$, seen as
@@ -105,7 +106,7 @@ case where $n / p$ is big; it is relevant whenever $n$ is large,
 leading to prohibitive memory issues irrespective of how big or small
 $p$ is.&lt;/p&gt;
 
-&lt;h1 id=&quot;smooth-sparse-online-dictionary-learning-smooth-sodl&quot;&gt;Smooth Sparse Online Dictionary-Learning (Smooth-SODL)&lt;/h1&gt;
+&lt;h2 id=&quot;smooth-sparse-online-dictionary-learning-smooth-sodl&quot;&gt;Smooth Sparse Online Dictionary-Learning (Smooth-SODL)&lt;/h2&gt;
 &lt;p&gt;We’d  want the component maps (aka dictionary atoms) $\V^j$ to be sparse and spatially smooth. A principled way to achieve such a goal is to impose a boundedness constraint on $\ell_1$-like norms of these maps to achieve sparsity and
 simultaneously impose smoothness by penalizing their Laplacian.
 Thus, we propose the following penalized dictionary-learning model&lt;/p&gt;
@@ -128,43 +129,112 @@ spread across the different samples. In the context of a specific
 neuro-imaging problem, if there are good grounds to assume that each
 sample / subject should be sparsely encoded across only a few atoms of
 the dictionary, then we can use the $\ell_1$ penalty $\phi(\U_i) :=
-\alpha||\U_i||_1$ as in \cite{mairal2010}. We note that in contrast to
-the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha &amp;gt; 0$ controls the amount of penalization on the codes. %, which can be updated in closed-form via SVD.&lt;/p&gt;
+\alpha||\U_i||_1$ as in [Mairal 2010]. We note that in contrast to
+the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha &amp;gt; 0$ controls the amount of penalization on the codes.&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;The constraint set $\mathcal C$ is a sparsity-inducing compact
+  &lt;li&gt;
+    &lt;p&gt;The constraint set $\mathcal C$ is a sparsity-inducing compact
 simple (mainly in the sense that the Euclidean projection onto
 $\mathcal C$ should be easy to compute) convex subset of $\mathbb R^p$
-like an $\ell_1$-ball $\mathbb B_{p,\ell_1}(\tau)$ or a simplex $\mathcal S_p(\tau)$, defined respectively as &lt;script type=&quot;math/tex&quot;&gt;\mathbb B_{p,\ell_1}(\tau) := \left\{\v \in \mathbb R^p\text{ s.t }|\v_1| + |\v_2| + \ldots + |\v_p| \le \tau\right\},&lt;/script&gt;
-and
+like an $\ell_1$-ball $\mathbb B_{p,\ell_1}(\tau)$ or a simplex $\mathcal S_p(\tau)$, defined respectively as&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\mathbb B_{p,\ell_1}(\tau) := \left\{\v \in \mathbb R^p\text{ s.t }|\v_1| + |\v_2| + \ldots + |\v_p| \le \tau\right\},&lt;/script&gt;
+
+&lt;p&gt;and
 $\mathcal S_p(\tau) := \mathbb B_{p,\ell_1}(\tau) \cap \mathbb R_+^p.$
 Other choices (e.g ElasticNet ball) are of course possible. The radius parameter $\tau &amp;gt; 0$ controls the
-amount of sparsity: smaller values lead to sparser atoms.&lt;/li&gt;
-  &lt;li&gt;Finally, $\Omega_{\text{Lap}}$ is the 3D Laplacian regularization functional
-defined by
-&lt;script type=&quot;math/tex&quot;&gt;\Omega_{\text{Lap}}(\v) := \frac{1}{2}\sum_{k=1}^p(\nabla_x \v)_k^2 + (\nabla_y
+amount of sparsity: smaller values lead to sparser atoms.
+-  Finally, $\Omega_{\text{Lap}}$ is the 3D Laplacian regularization functional
+defined by&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Omega_{\text{Lap}}(\v) := \frac{1}{2}\sum_{k=1}^p(\nabla_x \v)_k^2 + (\nabla_y
 \v)_k^2 + (\nabla_z \v)_k^2 =  \frac{1}{2}{\v}^T\Delta \v \ge 0,\;
 \forall \v \in \mathbb R^p,&lt;/script&gt;
-$\nabla_x$ being the discrete spatial gradient operator
+
+&lt;p&gt;$\nabla_x$ being the discrete spatial gradient operator
 along the $x$-axis (a $p$-by-$p$ matrix), $\nabla_y$ along the $y$-axis,
 etc., and $\Delta :=
 \nabla^T\nabla$ is the $p$-by-$p$ matrix representing the discrete
 Laplacian operator. This penalty is meant to impose blobs.
 The regularization parameter $\gamma \ge 0$ controls
 how much regularization we impose on the atoms, compared to the
-reconstruction error.&lt;/li&gt;
-&lt;/ul&gt;
+reconstruction error.&lt;/p&gt;
 
 &lt;p&gt;The above formulation, which we dub &lt;em&gt;Smooth Sparse Online Dictionary-Learning&lt;/em&gt; (Smooth-SODL) is inspired by, and generalizes the standard
 dictionary-learning framework of [Mairal 2010] –henceforth referred to as &lt;em&gt;Sparse Online Dictionary-Learning&lt;/em&gt; (SODL); setting $\gamma = 0$, we recover SODL [Mairal 2010].&lt;/p&gt;
 
-&lt;h1 id=&quot;estimating-the-model&quot;&gt;Estimating the model&lt;/h1&gt;
-&lt;p&gt;Explained in our NIPS paper
-&lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;paper&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;estimating-the-model&quot;&gt;Estimating the model&lt;/h2&gt;
 
-&lt;h1 id=&quot;results&quot;&gt;Results&lt;/h1&gt;
+&lt;p&gt;The objective function in problem of the Smooth-SODL model above is separately convex and block-separable
+w.r.t each of $\U$ and $\V$ but is not jointly convex in $(\U,\V)$. Also,
+it is continuously differentiable on the constraint set, which is
+compact and convex. Thus by classical results (e.g [Bertsekas 1999]), the problem can be solved via
+Block-Coordinate Descent
+(BCD) [Mairal 2010].
+ Reasoning along the lines of [Jenatton 2010], we derive
+ that the BCD iterates are as given in an algorithm presented further below.
+A crucial advantage of using a BCD scheme is that it is parameter
+free: there is not step size to tune.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-algorithm&quot;&gt;The Algorithm&lt;/h1&gt;
+&lt;p&gt;The resulting algorithm is adapted from [Mairal 2010].&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Require&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Regularization parameters $\alpha, \gamma &amp;gt; 0$.&lt;/li&gt;
+      &lt;li&gt;Initial dictionary $\V \in \mathbb R^{p \times k}$.&lt;/li&gt;
+      &lt;li&gt;Number of passes / iterations $T$ on the data.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Set&lt;/strong&gt; $\A_0 \leftarrow 0 \in \mathbb R^{k \times k}$, $\B_0
+\leftarrow 0 \in \mathbb R^{p \times k}$ \text (historical ``sufficient statistics’’)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;For&lt;/strong&gt; $t = 1$ to $T$, &lt;strong&gt;do&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Empirically draw a sample point $\X_t$ at random.&lt;/li&gt;
+      &lt;li&gt;Code update: Ridge-regression (via SVD of current dictionary $\V$)
+&lt;script type=&quot;math/tex&quot;&gt;\U_t \leftarrow \argmin_{\u \in \mathbb R^k}\frac{1}{2}\|\X_t -
+\V \u\|_2^2 + \frac{1}{2}\alpha\|\u\|_2^2.&lt;/script&gt;&lt;/li&gt;
+      &lt;li&gt;Rank-1 updates:
+$\A_t \leftarrow \A_{t-1} + \U_t\U_t^T,\; \B_t \leftarrow \B_{t-1} + \X_t\U_t^T$&lt;/li&gt;
+      &lt;li&gt;BCD dictionary update: Compute update for dictionary $\V$ using the algorithm below.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;dictionary-update&quot;&gt;Dictionary update&lt;/h1&gt;
+&lt;p&gt;For updating the dictionary, we proposed the following algorithm:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Require&lt;/strong&gt; $\V = [\V^1|\ldots|\V^k] \in \mathbb{R}^{p \times k}$
+(input dictionary).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Set&lt;/strong&gt; $\A = [\A^1|\ldots|\A^k] \in \mathbb R^{k \times k}$, $\B_t = [\B_t^1|\ldots|\B_t^k] \in \mathbb R^{p \times k}$
+(history)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;While&lt;/strong&gt; stopping criteria not met, &lt;strong&gt;do&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;For&lt;/strong&gt; $j = 1$ to $r$, &lt;strong&gt;do&lt;/strong&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Fix the code $\U$ and all atoms $k \ne j$ of the
+ dictionary $\V$ and then update $\V^j$ as follows
+ &lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\begin{aligned}
+\V^j &amp;\leftarrow \argmin_{\v \in \mathcal C}F_{\gamma (\A_t[j,j]/t)^{-1}}(\v, \V^j + \A_t[j,j]^{-1}(\B_t^j - \V\A_j)),
+  \end{aligned} %]]&gt;&lt;/script&gt;
+where &lt;script type=&quot;math/tex&quot;&gt;F_{\tilde{\gamma}}(\v,\a) \equiv \frac{1}{2}\|\v - \a\|_2^2 + \tilde{\gamma}\Omega_{\text{Lap}}(\v) = \frac{1}{2}\|\v - \a\|_2^2 + \frac{1}{2}\tilde{\gamma}\v^T\Delta\v.&lt;/script&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Details and proofs are given in the &lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;NIPS paper&lt;/a&gt;. Parameter selection is also discussed there.&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/figures/nips2016.png&quot; /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;concluding-remarks&quot;&gt;Concluding remarks&lt;/h1&gt;
+&lt;h2 id=&quot;concluding-remarks&quot;&gt;Concluding remarks&lt;/h2&gt;
 &lt;p&gt;To extract structured functionally discriminating patterns
 from massive brain data (i.e data-driven atlases), we have extended
 the online dictionary-learning framework first developed in

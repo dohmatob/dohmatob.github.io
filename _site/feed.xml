@@ -5,8 +5,8 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 08 Oct 2016 10:25:19 +0200</pubDate>
-    <lastBuildDate>Sat, 08 Oct 2016 10:25:19 +0200</lastBuildDate>
+    <pubDate>Sat, 08 Oct 2016 10:27:08 +0200</pubDate>
+    <lastBuildDate>Sat, 08 Oct 2016 10:27:08 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -75,7 +75,7 @@ MathJax.Hub.Configured();
 &lt;p&gt;Full paper &lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;here&lt;/a&gt;, accepted
 for NIPS 2016.&lt;/p&gt;
 
-&lt;h2 id=&quot;the-problem&quot;&gt;The problem&lt;/h2&gt;
+&lt;h1 id=&quot;the-problem&quot;&gt;The problem&lt;/h1&gt;
 &lt;p&gt;Consider a stack $\X
 \in \mathbb R^{n \times p}$ of $n$ subject-level brain images
 $\X_1,\X_2,\ldots,\X_n$ each of shape $n_1 \times n_2 \times n_3$, seen as
@@ -105,7 +105,7 @@ case where $n / p$ is big; it is relevant whenever $n$ is large,
 leading to prohibitive memory issues irrespective of how big or small
 $p$ is.&lt;/p&gt;
 
-&lt;h2 id=&quot;smooth-sparse-online-dictionary-learning-smooth-sodl&quot;&gt;Smooth Sparse Online Dictionary-Learning (Smooth-SODL)&lt;/h2&gt;
+&lt;h1 id=&quot;smooth-sparse-online-dictionary-learning-smooth-sodl&quot;&gt;Smooth Sparse Online Dictionary-Learning (Smooth-SODL)&lt;/h1&gt;
 &lt;p&gt;We’d  want the component maps (aka dictionary atoms) $\V^j$ to be sparse and spatially smooth. A principled way to achieve such a goal is to impose a boundedness constraint on $\ell_1$-like norms of these maps to achieve sparsity and
 simultaneously impose smoothness by penalizing their Laplacian.
 Thus, we propose the following penalized dictionary-learning model&lt;/p&gt;
@@ -157,14 +157,14 @@ reconstruction error.&lt;/li&gt;
 &lt;p&gt;The above formulation, which we dub &lt;em&gt;Smooth Sparse Online Dictionary-Learning&lt;/em&gt; (Smooth-SODL) is inspired by, and generalizes the standard
 dictionary-learning framework of [Mairal 2010] –henceforth referred to as &lt;em&gt;Sparse Online Dictionary-Learning&lt;/em&gt; (SODL); setting $\gamma = 0$, we recover SODL [Mairal 2010].&lt;/p&gt;
 
-&lt;h2 id=&quot;estimating-the-model&quot;&gt;Estimating the model&lt;/h2&gt;
+&lt;h1 id=&quot;estimating-the-model&quot;&gt;Estimating the model&lt;/h1&gt;
 &lt;p&gt;Explained in our NIPS paper
 &lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;paper&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+&lt;h1 id=&quot;results&quot;&gt;Results&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/figures/nips2016.png&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;concluding-remarks&quot;&gt;Concluding remarks&lt;/h2&gt;
+&lt;h1 id=&quot;concluding-remarks&quot;&gt;Concluding remarks&lt;/h1&gt;
 &lt;p&gt;To extract structured functionally discriminating patterns
 from massive brain data (i.e data-driven atlases), we have extended
 the online dictionary-learning framework first developed in

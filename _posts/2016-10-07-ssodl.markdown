@@ -36,7 +36,7 @@ $$\def\EE{\mathbb E}    \def\RR{\mathbb R}    \def\PP{\mathbb P}    \def\A{\math
 Full paper <a href="https://hal.inria.fr/hal-01369134">here</a>, accepted
 for NIPS 2016.
 
-## The problem	  
+# The problem	  
 Consider a stack $\X
 \in \mathbb R^{n \times p}$ of $n$ subject-level brain images
 $\X_1,\X_2,\ldots,\X_n$ each of shape $n_1 \times n_2 \times n_3$, seen as
@@ -66,7 +66,7 @@ case where $n / p$ is big; it is relevant whenever $n$ is large,
 leading to prohibitive memory issues irrespective of how big or small
 $p$ is.
 
-## Smooth Sparse Online Dictionary-Learning (Smooth-SODL)
+# Smooth Sparse Online Dictionary-Learning (Smooth-SODL)
 We'd  want the component maps (aka dictionary atoms) $\V^j$ to be sparse and spatially smooth. A principled way to achieve such a goal is to impose a boundedness constraint on $\ell_1$-like norms of these maps to achieve sparsity and
 simultaneously impose smoothness by penalizing their Laplacian.
 Thus, we propose the following penalized dictionary-learning model
@@ -118,14 +118,14 @@ reconstruction error.
 The above formulation, which we dub *Smooth Sparse Online Dictionary-Learning* (Smooth-SODL) is inspired by, and generalizes the standard
 dictionary-learning framework of [Mairal 2010] --henceforth referred to as *Sparse Online Dictionary-Learning* (SODL); setting $\gamma = 0$, we recover SODL [Mairal 2010].
 
-## Estimating the model
+# Estimating the model
 Explained in our NIPS paper
 <a href="https://hal.inria.fr/hal-01369134">paper</a>.
 
-## Results
+# Results
 <img src="/assets/figures/nips2016.png"/>
 
-## Concluding remarks
+# Concluding remarks
 To extract structured functionally discriminating patterns
 from massive brain data (i.e data-driven atlases), we have extended
 the online dictionary-learning framework first developed in

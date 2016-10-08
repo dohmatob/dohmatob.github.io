@@ -71,6 +71,7 @@ $p$ is.
 We'd  want the component maps (aka dictionary atoms) $\V^j$ to be sparse and spatially smooth. A principled way to achieve such a goal is to impose a boundedness constraint on $\ell_1$-like norms of these maps to achieve sparsity and
 simultaneously impose smoothness by penalizing their Laplacian.
 Thus, we propose the following penalized dictionary-learning model
+
 $$
 \begin{aligned}
   &\min_{\V \in \mathbb R^{p \times k}}\left(\lim_{n \rightarrow \infty}\frac{1}{n}\sum_{i=1}^n\min_{\U_i \in \mathbb R^{k}}\frac{1}{2} \|\X_i-\V\U_i\|_2^2 +  \frac{1}{2}\alpha\|\U_i\|_2^2\right) + \gamma\sum_{j=1}^k\Omega_{\text{Lap}}(\V^j).\\

@@ -5,8 +5,8 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 08 Oct 2016 10:19:26 +0200</pubDate>
-    <lastBuildDate>Sat, 08 Oct 2016 10:19:26 +0200</lastBuildDate>
+    <pubDate>Sat, 08 Oct 2016 10:21:37 +0200</pubDate>
+    <lastBuildDate>Sat, 08 Oct 2016 10:21:37 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -109,12 +109,13 @@ $p$ is.&lt;/p&gt;
 &lt;h2 id=&quot;smooth-sparse-online-dictionary-learning-smooth-sodl&quot;&gt;Smooth Sparse Online Dictionary-Learning (Smooth-SODL)&lt;/h2&gt;
 &lt;p&gt;We’d  want the component maps (aka dictionary atoms) $\V^j$ to be sparse and spatially smooth. A principled way to achieve such a goal is to impose a boundedness constraint on $\ell_1$-like norms of these maps to achieve sparsity and
 simultaneously impose smoothness by penalizing their Laplacian.
-Thus, we propose the following penalized dictionary-learning model
-&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+Thus, we propose the following penalized dictionary-learning model&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 \begin{aligned}
   &amp;\min_{\V \in \mathbb R^{p \times k}}\left(\lim_{n \rightarrow \infty}\frac{1}{n}\sum_{i=1}^n\min_{\U_i \in \mathbb R^{k}}\frac{1}{2} \|\X_i-\V\U_i\|_2^2 +  \frac{1}{2}\alpha\|\U_i\|_2^2\right) + \gamma\sum_{j=1}^k\Omega_{\text{Lap}}(\V^j).\\
   &amp;\text{subject to }\V^1,\ldots,\V^k \in \mathcal C
-\end{aligned} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+\end{aligned} %]]&gt;&lt;/script&gt;
 
 &lt;p&gt;The ingredients in the model can be broken down as follows:
 - Each of the terms $\max_{\U_i \in \mathbb R^k}\dfrac{1}{2}||\X_i-\V\U_i||_2^2$ measures how well the current dictionary $\V$ explains data $\X_i$ from subject $i$.

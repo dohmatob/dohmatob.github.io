@@ -5,8 +5,8 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 07 Oct 2016 18:20:24 +0200</pubDate>
-    <lastBuildDate>Fri, 07 Oct 2016 18:20:24 +0200</lastBuildDate>
+    <pubDate>Sat, 08 Oct 2016 10:19:26 +0200</pubDate>
+    <lastBuildDate>Sat, 08 Oct 2016 10:19:26 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -60,7 +60,119 @@ running time. Just like the Mairal et al. (2010) reference method, the
 online nature of our proposed algorithm allows it to scale to
 arbitrarily sized datasets. Experiments on brain data show that our proposed method extracts structured and denoised dictionaries that are more intepretable and better capture inter-subject variability in small medium, and large-scale regimes alike, compared to state-of-the-art models.&lt;/p&gt;
 
+&lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]],
+  }
+});
+MathJax.Hub.Configured();
+&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\def\EE{\mathbb E}    \def\RR{\mathbb R}    \def\PP{\mathbb P}    \def\A{\mathbf A} \def\D{\mathbf D} \def\M{\mathbf M} \def\X{\mathbf X} \def\b{\mathbf b} \def\a{\mathbf a} \def\d{\mathbf d} \def\x{\mathbf x} \def\balpha{\boldsymbol{\alpha}} \def\argmin{\text{argmin}} \def\Id{\mathbf I} \def\1{\mathbf 1} \def\x{\mathbf x}  \def\y{\mathbf y}  \def\u{\mathbf u}  \def\v{\mathbf v}  \def\X{\mathbf X}  \def\Y{\mathbf Y}  \def\Z{\mathbf Z}  \def\A{\mathbf A}  \def\B{\mathbf B} \def\U{\mathbf U}  \def\V{\mathbf V}&lt;/script&gt;
+
+&lt;p&gt;Full paper &lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;here&lt;/a&gt;, accepted
+for NIPS 2016.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-problem&quot;&gt;The problem&lt;/h2&gt;
+&lt;p&gt;Consider a stack $\X
+\in \mathbb R^{n \times p}$ of $n$ subject-level brain images
+$\X_1,\X_2,\ldots,\X_n$ each of shape $n_1 \times n_2 \times n_3$, seen as
+$p$-dimensional row vectors –with $p = n_1\times n_2 \times n_3$, the number of voxels. These could be images of fMRI activity
+patterns like statistical parametric maps of brain activation, raw
+pre-registered (into a common coordinate space) fMRI time-series, PET
+images, etc. We would like to decompose these images as a product of
+$k \le \min(n, p)$ component maps (aka latent factors or dictionary atoms)
+ $\V^1,
+\ldots, \V^k \in \mathbb{R}^{p \times 1}$ and modulation coefficients
+$\U_1, \ldots, \U_n \in \mathbb R^{k \times 1}$ called \textit{codes} (one $k$-dimensional code per sample point), i.e
+\begin{eqnarray}
+\X_i \approx \V \U_i, \text{ for } i=1,2,\ldots,n
+\end{eqnarray}
+where $\V := [\V^1|\ldots|\V^k] \in \mathbb{R}^{p \times k}$, an unknown dictionary to be estimated.
+Typically, $p \sim 10^{5}$ –
+$10^{6}$ (in full-brain high-resolution fMRI) and $n \sim 10^{2}$ –
+$10^{5}$ (for example, in considering all the 500 subjects and all
+the about 15 –20 functional tasks of the Human Connectome Project dataset. Our work handles the extreme
+case where both $n$ and $p$ are large (massive-data setting).&lt;/p&gt;
+
+&lt;p&gt;It is reasonable then to only consider under-complete dictionaries: $k
+\le \min(n, p)$. Typically, we use $k \sim 50$ or $100$ components.&lt;/p&gt;
+
+&lt;p&gt;It should be noted that online optimization is not only crucial in the
+case where $n / p$ is big; it is relevant whenever $n$ is large,
+leading to prohibitive memory issues irrespective of how big or small
+$p$ is.&lt;/p&gt;
+
+&lt;h2 id=&quot;smooth-sparse-online-dictionary-learning-smooth-sodl&quot;&gt;Smooth Sparse Online Dictionary-Learning (Smooth-SODL)&lt;/h2&gt;
+&lt;p&gt;We’d  want the component maps (aka dictionary atoms) $\V^j$ to be sparse and spatially smooth. A principled way to achieve such a goal is to impose a boundedness constraint on $\ell_1$-like norms of these maps to achieve sparsity and
+simultaneously impose smoothness by penalizing their Laplacian.
+Thus, we propose the following penalized dictionary-learning model
+&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\begin{aligned}
+  &amp;\min_{\V \in \mathbb R^{p \times k}}\left(\lim_{n \rightarrow \infty}\frac{1}{n}\sum_{i=1}^n\min_{\U_i \in \mathbb R^{k}}\frac{1}{2} \|\X_i-\V\U_i\|_2^2 +  \frac{1}{2}\alpha\|\U_i\|_2^2\right) + \gamma\sum_{j=1}^k\Omega_{\text{Lap}}(\V^j).\\
+  &amp;\text{subject to }\V^1,\ldots,\V^k \in \mathcal C
+\end{aligned} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;The ingredients in the model can be broken down as follows:
+- Each of the terms $\max_{\U_i \in \mathbb R^k}\dfrac{1}{2}||\X_i-\V\U_i||_2^2$ measures how well the current dictionary $\V$ explains data $\X_i$ from subject $i$.
+onstruction error for subject $i$. Both the $\U$ and $\V$ matrices are parameters to be estimated.
+The Ridge penalty term $\phi(\U_i) \equiv \frac{1}{2}\alpha||\U_i||_2^2$
+on the codes amounts to assuming that the energy of the decomposition is
+spread across the different samples. In the context of a specific
+neuro-imaging problem, if there are good grounds to assume that each
+sample / subject should be sparsely encoded across only a few atoms of
+the dictionary, then we can use the $\ell_1$ penalty $\phi(\U_i) :=
+\alpha||\U_i||_1$ as in \cite{mairal2010}. We note that in contrast to
+the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha &amp;gt; 0$ controls the amount of penalization on the codes. %, which can be updated in closed-form via SVD. %% (w.r.t small pertubations in
+ the input data $\X$) due to strong-convexity of the resulting coding problem.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The constraint set $\mathcal C$ is a sparsity-inducing compact
+simple\footnote{Mainly in the sense that the Euclidean projection onto
+$\mathcal C$ should be easy to compute.} convex subset of $\mathbb R^p$
+like an $\ell_1$-ball $\mathbb B_{p,\ell_1}(\tau)$ or a simplex $\mathcal S_p(\tau)$, defined respectively as &lt;script type=&quot;math/tex&quot;&gt;\mathbb B_{p,\ell_1}(\tau) := \left\{\v \in \mathbb R^p\text{ s.t }|\v_1| + |\v_2| + \ldots + |\v_p| \le \tau\right\},&lt;/script&gt;
+and
+$\mathcal S_p(\tau) := \mathbb B_{p,\ell_1}(\tau) \cap \mathbb R_+^p.$
+Other choices (e.g ElasticNet ball) are of course possible. The radius parameter $\tau &amp;gt; 0$ controls the
+amount of sparsity: smaller values lead to sparser atoms.&lt;/li&gt;
+  &lt;li&gt;Finally, $\Omega_{\text{Lap}}$ is the 3D Laplacian regularization functional
+defined by
+&lt;script type=&quot;math/tex&quot;&gt;\Omega_{\text{Lap}}(\v) := \frac{1}{2}\sum_{k=1}^p(\nabla_x \v)_k^2 + (\nabla_y
+\v)_k^2 + (\nabla_z \v)_k^2 =  \frac{1}{2}{\v}^T\Delta \v \ge 0,\;
+\forall \v \in \mathbb R^p,&lt;/script&gt;
+$\nabla_x$ being the discrete spatial gradient operator
+along the $x$-axis (a $p$-by-$p$ matrix), $\nabla_y$ along the $y$-axis,
+etc., and $\Delta :=
+\nabla^T\nabla$ is the $p$-by-$p$ matrix representing the discrete
+Laplacian operator. This penalty is meant to impose blobs.
+The regularization parameter $\gamma \ge 0$ controls
+how much regularization we impose on the atoms, compared to the
+reconstruction error.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The above formulation, which we dub &lt;em&gt;Smooth Sparse Online Dictionary-Learning&lt;/em&gt; (Smooth-SODL) is inspired by, and generalizes the standard
+dictionary-learning framework of [Mairal 2010] –henceforth referred to as &lt;em&gt;Sparse Online Dictionary-Learning&lt;/em&gt; (SODL); setting $\gamma = 0$, we recover SODL [Mairal 2010].&lt;/p&gt;
+
+&lt;h2 id=&quot;estimating-the-model&quot;&gt;Estimating the model&lt;/h2&gt;
+&lt;p&gt;Explained in our NIPS paper
+&lt;a href=&quot;https://hal.inria.fr/hal-01369134&quot;&gt;paper&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;/assets/figures/nips2016.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;concluding-remarks&quot;&gt;Concluding remarks&lt;/h2&gt;
+&lt;p&gt;To extract structured functionally discriminating patterns
+from massive brain data (i.e data-driven atlases), we have extended
+the online dictionary-learning framework first developed in
+ [Mairal 2010], to learn structured regions
+representative of brain organization. To this end, we have successfully augmented [Mairal 2010] with a Laplacian prior on the component maps,
+while conserving the low numerical complexity of the latter.
+Through experiments, we have shown that the resultant model –Smooth-SODL model – extracts structured and denoised dictionaries that are more intepretable and better capture inter-subject variability in small medium, and large-scale regimes alike, compared to state-of-the-art models.
+We believe such online multivariate online methods shall become the de facto
+way do dimensionality reduction and ROI extraction in future.&lt;/p&gt;
 </description>
         <pubDate>Fri, 07 Oct 2016 14:01:00 +0200</pubDate>
         <link>/research/2016/10/07/ssodl.html</link>

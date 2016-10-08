@@ -80,6 +80,7 @@ $$
 $$
 
 The ingredients in the model can be broken down as follows:
+
 - Each of the terms $\max_{\U_i \in \mathbb R^k}\dfrac{1}{2}||\X_i-\V\U_i||_2^2$ measures how well the current dictionary $\V$ explains data $\X_i$ from subject $i$.
 onstruction error for subject $i$. Both the $\U$ and $\V$ matrices are parameters to be estimated.
 The Ridge penalty term $\phi(\U_i) \equiv \frac{1}{2}\alpha||\U_i||_2^2$

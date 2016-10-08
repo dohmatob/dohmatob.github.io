@@ -11,7 +11,7 @@ images:
 
 ---
 
-<b>Abstract:</b>
+*<b>Abstract.</b>*
   We propose a multivariate online dictionary-learning
   method for obtaining decompositions of brain
 images with structured and sparse components (aka atoms). Sparsity is
@@ -23,7 +23,6 @@ patterns of activation. We propose to use a Sobolev (Laplacian)
 penalty to impose this type of structure.
 Combining the two penalties, we obtain decompositions that properly
 delineate brain structures from functional images.
-
 This non-trivially extends the
 online dictionary-learning  work of Mairal et
 al. (2010), at the price of only a factor of 2 or 3 on the overall
@@ -90,12 +89,11 @@ neuro-imaging problem, if there are good grounds to assume that each
 sample / subject should be sparsely encoded across only a few atoms of
 the dictionary, then we can use the $\ell_1$ penalty $\phi(\U_i) :=
 \alpha||\U_i||_1$ as in \cite{mairal2010}. We note that in contrast to
-the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha > 0$ controls the amount of penalization on the codes. %, which can be updated in closed-form via SVD. %% (w.r.t small pertubations in
- the input data $\X$) due to strong-convexity of the resulting coding problem.
+the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha > 0$ controls the amount of penalization on the codes. %, which can be updated in closed-form via SVD.
 
 - The constraint set $\mathcal C$ is a sparsity-inducing compact
-simple\footnote{Mainly in the sense that the Euclidean projection onto
-$\mathcal C$ should be easy to compute.} convex subset of $\mathbb R^p$
+simple (mainly in the sense that the Euclidean projection onto
+$\mathcal C$ should be easy to compute) convex subset of $\mathbb R^p$
 like an $\ell_1$-ball $\mathbb B_{p,\ell_1}(\tau)$ or a simplex $\mathcal S_p(\tau)$, defined respectively as $$\mathbb B_{p,\ell_1}(\tau) := \left\{\v \in \mathbb R^p\text{ s.t }|\v_1| + |\v_2| + \ldots + |\v_p| \le \tau\right\},$$
 and
 $\mathcal S_p(\tau) := \mathbb B_{p,\ell_1}(\tau) \cap \mathbb R_+^p.$

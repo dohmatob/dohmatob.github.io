@@ -5,8 +5,8 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 08 Oct 2016 10:21:47 +0200</pubDate>
-    <lastBuildDate>Sat, 08 Oct 2016 10:21:47 +0200</lastBuildDate>
+    <pubDate>Sat, 08 Oct 2016 10:25:19 +0200</pubDate>
+    <lastBuildDate>Sat, 08 Oct 2016 10:25:19 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -40,7 +40,7 @@ Read the full paper on &lt;a href=&quot;https://arxiv.org/abs/1507.07901&quot;&g
     
       <item>
         <title>Learning brain regions from large-scale online structured sparse DL</title>
-        <description>&lt;p&gt;&lt;b&gt;Abstract:&lt;/b&gt;
+        <description>&lt;p&gt;&lt;em&gt;&lt;b&gt;Abstract.&lt;/b&gt;&lt;/em&gt;
   We propose a multivariate online dictionary-learning
   method for obtaining decompositions of brain
 images with structured and sparse components (aka atoms). Sparsity is
@@ -51,9 +51,8 @@ smooth and compact, thus making up blobs, as opposed to scattered
 patterns of activation. We propose to use a Sobolev (Laplacian)
 penalty to impose this type of structure.
 Combining the two penalties, we obtain decompositions that properly
-delineate brain structures from functional images.&lt;/p&gt;
-
-&lt;p&gt;This non-trivially extends the
+delineate brain structures from functional images.
+This non-trivially extends the
 online dictionary-learning  work of Mairal et
 al. (2010), at the price of only a factor of 2 or 3 on the overall
 running time. Just like the Mairal et al. (2010) reference method, the
@@ -117,8 +116,11 @@ Thus, we propose the following penalized dictionary-learning model&lt;/p&gt;
   &amp;\text{subject to }\V^1,\ldots,\V^k \in \mathcal C
 \end{aligned} %]]&gt;&lt;/script&gt;
 
-&lt;p&gt;The ingredients in the model can be broken down as follows:
-- Each of the terms $\max_{\U_i \in \mathbb R^k}\dfrac{1}{2}||\X_i-\V\U_i||_2^2$ measures how well the current dictionary $\V$ explains data $\X_i$ from subject $i$.
+&lt;p&gt;The ingredients in the model can be broken down as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Each of the terms $\max_{\U_i \in \mathbb R^k}\dfrac{1}{2}||\X_i-\V\U_i||_2^2$ measures how well the current dictionary $\V$ explains data $\X_i$ from subject $i$.
 onstruction error for subject $i$. Both the $\U$ and $\V$ matrices are parameters to be estimated.
 The Ridge penalty term $\phi(\U_i) \equiv \frac{1}{2}\alpha||\U_i||_2^2$
 on the codes amounts to assuming that the energy of the decomposition is
@@ -127,13 +129,11 @@ neuro-imaging problem, if there are good grounds to assume that each
 sample / subject should be sparsely encoded across only a few atoms of
 the dictionary, then we can use the $\ell_1$ penalty $\phi(\U_i) :=
 \alpha||\U_i||_1$ as in \cite{mairal2010}. We note that in contrast to
-the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha &amp;gt; 0$ controls the amount of penalization on the codes. %, which can be updated in closed-form via SVD. %% (w.r.t small pertubations in
- the input data $\X$) due to strong-convexity of the resulting coding problem.&lt;/p&gt;
-
-&lt;ul&gt;
+the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha &amp;gt; 0$ controls the amount of penalization on the codes. %, which can be updated in closed-form via SVD.&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;The constraint set $\mathcal C$ is a sparsity-inducing compact
-simple\footnote{Mainly in the sense that the Euclidean projection onto
-$\mathcal C$ should be easy to compute.} convex subset of $\mathbb R^p$
+simple (mainly in the sense that the Euclidean projection onto
+$\mathcal C$ should be easy to compute) convex subset of $\mathbb R^p$
 like an $\ell_1$-ball $\mathbb B_{p,\ell_1}(\tau)$ or a simplex $\mathcal S_p(\tau)$, defined respectively as &lt;script type=&quot;math/tex&quot;&gt;\mathbb B_{p,\ell_1}(\tau) := \left\{\v \in \mathbb R^p\text{ s.t }|\v_1| + |\v_2| + \ldots + |\v_p| \le \tau\right\},&lt;/script&gt;
 and
 $\mathcal S_p(\tau) := \mathbb B_{p,\ell_1}(\tau) \cap \mathbb R_+^p.$

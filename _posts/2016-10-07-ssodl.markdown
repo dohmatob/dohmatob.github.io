@@ -88,7 +88,7 @@ spread across the different samples. In the context of a specific
 neuro-imaging problem, if there are good grounds to assume that each
 sample / subject should be sparsely encoded across only a few atoms of
 the dictionary, then we can use the $\ell_1$ penalty $\phi(\U_i) :=
-\alpha||\U_i||_1$ as in \cite{mairal2010}. We note that in contrast to
+\alpha||\U_i||_1$ as in [Mairal 2010]. We note that in contrast to
 the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha > 0$ controls the amount of penalization on the codes. %, which can be updated in closed-form via SVD.
 
 - The constraint set $\mathcal C$ is a sparsity-inducing compact

@@ -12,8 +12,8 @@ Science in Paris.  I'm part
 of the <a href="https://team.inria.fr/parietal/">
 Parietal Team, INRIA / CEA</a>.  The PhD thesis will be defended by the end
 of 2017. My interests include
-mathematics, machine learnine, convex optimization, games theory,
-and neuroscience.
+math, machine learning, convex optimization, game theory,
+and recently neuroscience.
 </p>
 <p>
 You can find my CV <a href="https://drive.google.com/file/d/0B-njZxsmwjYNRExmaFJxU3J6aEU/view?usp=sharing">here</a>.

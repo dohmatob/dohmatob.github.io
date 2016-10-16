@@ -179,8 +179,15 @@ where $$F_{\tilde{\gamma}}(\v,\a) \equiv \frac{1}{2}\|\v - \a\|_2^2 + \tilde{\ga
 
 Details and proofs are given in the <a href="https://hal.inria.fr/hal-01369134">NIPS paper</a>. Parameter selection is also discussed there.
 
-## Results
-<img src="/assets/figures/nips2016.png"/>
+## Some qualitative results
+<img src="/assets/figures/ssodl/components_LANGUAGE_nc=40_alpha=auto_gamma=1000_radius=4_split=0_time=12_4.png" width="30%"/>
+<img src="/assets/figures/ssodl/components_LANGUAGE_nc=40_alpha=auto_gamma=0_radius=4_split=0_time=12_22.png" width="30%"/>
+<img src="/assets/figures/ssodl/components_LANGUAGE_nc=40_PCA_33.png" width="30%"/>
+
+Each column represents an atom of the estimated dictionary, where atoms from
+  the different models (the rows of the plots) have been matched via a Hungarian algorithm. Here, we only show a limited number of the most ``intepretable'' atoms. Notice how the major structures in each atom are reproducible across the different models. 
+  Maps corresponding to hard-thresholded CanICA
+  [Varoquaux 2010] components have also been included, and have been called tCanICA. In contrast, the maps from the SODL [Mairal 2010}]and our proposed Smooth-SODL model were not been thresholded.
 
 ## Concluding remarks
 To extract structured functionally discriminating patterns

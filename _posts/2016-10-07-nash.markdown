@@ -8,10 +8,11 @@ images:
  - url: /assets/figures/opt2016_res.png
  - alt: projection-free computation of NE
  - title: projection-free computation of NE
+ - bibliography: nash.bib
 
 ---
-<b>Abstract:</b>
-We present a simple projection-free primal-dual algorithm for computing approxi-
+In our OPT2016 NIPS workshop <a href="https://arxiv.org/abs/1507.07901">paper</a>,
+we propose a simple projection-free primal-dual algorithm for computing approxi-
 mate Nash-equilibria in two-person zero-sum sequential games with incomplete
 information and perfect recall (like Texas Hold’em Poker). Our algorithm is numer-
 ically stable, performs only basic iterations (i.e matvec multiplications, clipping,
@@ -26,4 +27,26 @@ present experimental results on matrix games on simplexes and Kuhn Poker.
 
 <img src="/assets/figures/opt2016_algo.png"/>
 <img src="/assets/figures/opt2016_res.png"/>
+
+## Results
 Read the full paper on <a href="https://arxiv.org/abs/1507.07901">arXiv</a>.
+
+## Concluding remarks
+Making use of the sequence-form representation
+[@koller1992complexity]
+\cite{koller1992complexity,von1996efficient,vonequilibrium}, we have
+proposed an equivalent Generalized Saddle-Point (GSP) formulation to
+the Nash-equilibrium problem for sequential games with incomplete
+information and perfect recall (e.g Texas Hold'em, etc.). Then, we
+have devised a simple numerically stable primal-dual algorithm for
+solving the GSP, and so by equivalence, compute (approximate)
+Nash-equilibria for such games. Our algorithm is simple to implement,
+with a low constant cost per iteration, and enjoys a rigorous
+convergence theory with a proven $\mathcal{O}(1/\epsilon)$ convergence
+in terms of basic operations (matvec products, clipping, etc.), to a
+Nash $(\epsilon,0)$-equilibrium of the game. On an experimental footing,
+this is just preliminary works, and in future we plan to run
+more experiments on real Poker games to measure the practical power of
+the proposed algorithm compared to state-of-the-art methods like CFR and variants
+\cite{zinkevich2008regret,lanctot2009monte,Bowling09012015,tammelin14},
+ and first-order methods like \cite{gilpinfirst}.

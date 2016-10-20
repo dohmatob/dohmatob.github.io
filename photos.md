@@ -6,9 +6,11 @@ order: 4
 ---
 
 <figure>
-	<img style="margin-right: 2em;" width="100%" src="/assets/ns.gif" />
+	<a href="/assets/ns.gif">
+	<img style="margin-right: 2em;" width="100%" src="/assets/ns.jpg" />
+	</a>
   <figcaption>
-	Fig. - I'm sipping from the small white cup. <i>Video courtesy of the NeuroBreakfast team @ Neurospin.</i>
+	Fig. - Time lapse video, <i>courtesy of the NeuroBreakfast team @ Neurospin</i>.
   </figcaption>
 </figure>	
 

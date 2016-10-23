@@ -5,8 +5,8 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 22 Oct 2016 14:45:51 +0200</pubDate>
-    <lastBuildDate>Sat, 22 Oct 2016 14:45:51 +0200</lastBuildDate>
+    <pubDate>Sun, 23 Oct 2016 12:45:01 +0200</pubDate>
+    <lastBuildDate>Sun, 23 Oct 2016 12:45:01 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -14,15 +14,7 @@
         <description>&lt;p&gt;In this post, I’ll demo variational auto-encoders &lt;a href=&quot;https://arxiv.org/abs/1312.6114&quot;&gt;
 [Kingma et al. 2014]&lt;/a&gt; on the “Frey faces” dataset, using the &lt;a href=&quot;https://keras.io/&quot;&gt;keras deep-learning Python library&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Dependencies:&lt;/strong&gt;
-We’ll need the following python libraries to get things running:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Numpy / Scipy (install everything via anaconda)&lt;/li&gt;
-  &lt;li&gt;keras&lt;/li&gt;
-  &lt;li&gt;Theano or Tensforflow (as backend for Keras)&lt;/li&gt;
-&lt;/ul&gt;
-
+&lt;h2 id=&quot;some-formal-preliminaries&quot;&gt;Some formal preliminaries&lt;/h2&gt;
 &lt;p&gt;A well-known thermodynamic variational bound on &lt;em&gt;surprise&lt;/em&gt; goes as follows:&lt;/p&gt;
 
 &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
@@ -38,8 +30,7 @@ MathJax.Hub.Configured();
 
 &lt;p&gt;\begin{equation}
 \begin{split}
--\log p_G(x) = F_G(x) = F^R_G(x) - D_{KL}(p_R(.|x)||P_G(.|x)) \le F^R_G(x) &amp;amp;:= \langle -\log(p_G(., x)) \rangle_{P_R(.|x)} - \mathcal H(P_R(.|x)),&lt;br /&gt;
-&amp;amp;= -\sum_{z}p_R(z|x)(\log(p_G(z,x) / p_R(z|x))),
+-\log p_G(x) = F_G(x) = F^R_G(x) - D_{KL}(p_R(.|x)||P_G(.|x)) \le F^R_G(x),
 \end{split}
 \end{equation}
 where&lt;/p&gt;
@@ -48,11 +39,74 @@ where&lt;/p&gt;
   &lt;li&gt;$x$: Examplar datavector (visible layer).&lt;/li&gt;
   &lt;li&gt;$z$: Hidden / latent variable (these are the ‘causes’ of the datavectors).&lt;/li&gt;
   &lt;li&gt;$G$: Generative model, with density
-$z \sim p_G(.|x)$.&lt;/li&gt;
+$z \sim p_G(.|x)$,
+parametrized by a tensor of weights $W^G$ (we’ll use a neural network)&lt;/li&gt;
   &lt;li&gt;$R$: Recognition model, with density
-$z \sim p_R(.|x)$.&lt;/li&gt;
+$z \sim p_R(.|x)$,
+parametrized by a tensor of weights $W^R$ (we’ill use a NN).&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;$D_{KL}(q||p)$ is the Kullback-Leibler divergence between probability densities $p$ and $q$,
+defined by
+\begin{equation}
+  D_{KL}(q||p) := \sum_{z}q(z)\log(q(z)/p(z))
+\end{equation}&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;$F_G(x)$: Helmhost free-energy f a fictive thermodynamic system with macrostate energy levels $(E_G(z,x))_z$ with $E_G(z,x) := -\log(p_G(z,x))$, and partition function $p_G(x)$.&lt;/li&gt;
-  &lt;li&gt;$F^R_G(x)$: &lt;em&gt;variational&lt;/em&gt; Helmholtz free-energy from $G$ to $R$.&lt;/li&gt;
+  &lt;li&gt;$F^R_G(x)$ is the &lt;em&gt;variational&lt;/em&gt; Helmholtz free-energy from $G$ to $R$, defined by
+\begin{equation}
+F_G^R(x) := \langle -\log(p_G(., x)) \rangle_{P_R(.|x)} - \mathcal H(P_R(.|x)),
+\end{equation}
+with
+\begin{equation}
+  \mathcal H(p_R(.|x)) := -\sum_{z}p_R(z|x))\log(p_R(z|x)),
+\end{equation}
+the entropy of
+$p_R(.|x)$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Problem:&lt;/strong&gt; How do we sample from the recognition density
+  $p_R(.|x)$
+  in such a way that the sampling process is differentiable w.r.t the weights of the recognition
+  network
+  $	W^R$
+  ?&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Solution:&lt;/strong&gt; The reparametrization trick!&lt;/p&gt;
+
+&lt;p&gt;The solution proposed in &lt;a href=&quot;https://arxiv.org/abs/1312.6114&quot;&gt;
+[Kingma et al. 2014]&lt;/a&gt; is to use a &lt;em&gt;reparametrization trick&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Choose
+$\epsilon \sim p_{\text{noise}}$
+(noise distribution, independent of
+$W^R$!
+)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Set
+$z = g(W^{R}, x, \epsilon)$,
+where
+$g$
+is an appropriate class
+$\mathcal C^1$
+function.&lt;/p&gt;
+
+    &lt;p&gt;$ \implies $
+a sample
+$z \sim p_R(.|x)$,
+from the correct
+  posterior&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-code&quot;&gt;The code&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Dependencies:&lt;/strong&gt;
+We’ll need the following python libraries to get things running:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Numpy / Scipy (install everything via anaconda)&lt;/li&gt;
+  &lt;li&gt;keras&lt;/li&gt;
+  &lt;li&gt;Theano or Tensforflow (as backend for Keras)&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;A bit of setup&lt;/p&gt;

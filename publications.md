@@ -7,7 +7,7 @@ order: 3
 
 Presentation slides
 ===================
-- PhD (2/3 complete) <a href="https://drive.google.com/file/d/0B-njZxsmwjYNd2UyRVlFV2kyRDA/view?usp=sharing">progress preport</a>.
+- PhD <a href="https://drive.google.com/file/d/0B-njZxsmwjYNd2UyRVlFV2kyRDA/view?usp=sharing">progress preport</a> after 2 years (on 3).
 
 
 Publications

@@ -4,7 +4,7 @@ title: Home
 permalink: /
 order: 1
 ---
-<img style="float: left; margin-right: 2em;" width="120px" src="/assets/photo3.jpg" />
+<img style="float: left; margin-right: 2em;" width="300px" src="/assets/photo3.jpg" />
 
 <p>
 Hi there. Welcome to my blog. I'm a PhD Student in Computer

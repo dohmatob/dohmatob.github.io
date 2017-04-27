@@ -28,13 +28,13 @@ present experimental results on matrix games on simplexes and Kuhn Poker.
 <img src="/assets/figures/opt2016_algo.png"/>
 <img src="/assets/figures/opt2016_res.png"/>
 
+{% include mathjax.html %}
+
 ## Results
 Read the full paper on <a href="https://arxiv.org/abs/1507.07901">arXiv</a>.
 
 ## Concluding remarks
-Making use of the sequence-form representation
-[@koller1992complexity]
-\cite{koller1992complexity,von1996efficient,vonequilibrium}, we have
+Making use of the sequence-form representation, we have
 proposed an equivalent Generalized Saddle-Point (GSP) formulation to
 the Nash-equilibrium problem for sequential games with incomplete
 information and perfect recall (e.g Texas Hold'em, etc.). Then, we
@@ -48,5 +48,4 @@ Nash $(\epsilon,0)$-equilibrium of the game. On an experimental footing,
 this is just preliminary works, and in future we plan to run
 more experiments on real Poker games to measure the practical power of
 the proposed algorithm compared to state-of-the-art methods like CFR and variants
-\cite{zinkevich2008regret,lanctot2009monte,Bowling09012015,tammelin14},
- and first-order methods like \cite{gilpinfirst}.
+ and first-order methods like Andrew Gilpin's.

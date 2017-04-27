@@ -5,8 +5,8 @@
     <description>mathematics / machine learning / convex optimization / game theory / brain science</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 19 Feb 2017 14:26:20 +0100</pubDate>
-    <lastBuildDate>Sun, 19 Feb 2017 14:26:20 +0100</lastBuildDate>
+    <pubDate>Thu, 27 Apr 2017 10:48:04 +0200</pubDate>
+    <lastBuildDate>Thu, 27 Apr 2017 10:48:04 +0200</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -329,13 +329,22 @@ present experimental results on matrix games on simplexes and Kuhn Poker.&lt;/p&
 &lt;p&gt;&lt;img src=&quot;/assets/figures/opt2016_algo.png&quot; /&gt;
 &lt;img src=&quot;/assets/figures/opt2016_res.png&quot; /&gt;&lt;/p&gt;
 
+&lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]],
+  }
+});
+MathJax.Hub.Configured();
+&lt;/script&gt;
+
 &lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
 &lt;p&gt;Read the full paper on &lt;a href=&quot;https://arxiv.org/abs/1507.07901&quot;&gt;arXiv&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;concluding-remarks&quot;&gt;Concluding remarks&lt;/h2&gt;
-&lt;p&gt;Making use of the sequence-form representation
-[@koller1992complexity]
-\cite{koller1992complexity,von1996efficient,vonequilibrium}, we have
+&lt;p&gt;Making use of the sequence-form representation, we have
 proposed an equivalent Generalized Saddle-Point (GSP) formulation to
 the Nash-equilibrium problem for sequential games with incomplete
 information and perfect recall (e.g Texas Hold’em, etc.). Then, we
@@ -349,8 +358,7 @@ Nash $(\epsilon,0)$-equilibrium of the game. On an experimental footing,
 this is just preliminary works, and in future we plan to run
 more experiments on real Poker games to measure the practical power of
 the proposed algorithm compared to state-of-the-art methods like CFR and variants
-\cite{zinkevich2008regret,lanctot2009monte,Bowling09012015,tammelin14},
- and first-order methods like \cite{gilpinfirst}.&lt;/p&gt;
+ and first-order methods like Andrew Gilpin’s.&lt;/p&gt;
 </description>
         <pubDate>Fri, 07 Oct 2016 14:25:00 +0200</pubDate>
         <link>/research/2016/10/07/nash.html</link>

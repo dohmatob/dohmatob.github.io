@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "The importance of standardizing data before running PCA"
-date:   2016-10-07 14:01
+title:  "Beward of standardizing data before running PCA!"
+date:   2017-04-27 15:38
 categories: research
 images:
 
- - url: /assets/scaling_files/scaling_6_1.png
- - alt: Sobolev regularization meets online DL
- - title: Sobolev regularization meets online DL
+ - url: /assets/scaling_files/scaling_6_0.png
+ - alt: Beward of standardizing data before running PCA
+ - title: Beward of standardizing data before running PCA
 
 ---
 
@@ -106,5 +106,4 @@ for name, pipeline in pipelines.items():
 Results
 =======
 <img src="/assets/scaling_files/scaling_6_0.png"/>
-<img src="/assets/scaling_files/scaling_6_1.png"/>
 

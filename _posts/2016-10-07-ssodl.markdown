@@ -68,7 +68,7 @@ case where $n / p$ is big; it is relevant whenever $n$ is large,
 leading to prohibitive memory issues irrespective of how big or small
 $p$ is.
 
-## Smooth Sparse Online Dictionary-Learning (Smooth-SODL)
+## Our model: Smooth Sparse Online Dictionary-Learning (Smooth-SODL)
 We'd  want the component maps (aka dictionary atoms) $\V^j$ to be sparse and spatially smooth. A principled way to achieve such a goal is to impose a boundedness constraint on $\ell_1$-like norms of these maps to achieve sparsity and
 simultaneously impose smoothness by penalizing their Laplacian.
 Thus, we propose the following penalized dictionary-learning model
@@ -82,17 +82,6 @@ $$
 
 The ingredients in the model can be broken down as follows:
 
-- Each of the terms $\max_{\U_i \in \mathbb R^k}\dfrac{1}{2}||\X_i-\V\U_i||_2^2$ measures how well the current dictionary $\V$ explains data $\X_i$ from subject $i$.
-onstruction error for subject $i$. Both the $\U$ and $\V$ matrices are parameters to be estimated.
-The Ridge penalty term $\phi(\U_i) \equiv \frac{1}{2}\alpha||\U_i||_2^2$
-on the codes amounts to assuming that the energy of the decomposition is
-spread across the different samples. In the context of a specific
-neuro-imaging problem, if there are good grounds to assume that each
-sample / subject should be sparsely encoded across only a few atoms of
-the dictionary, then we can use the $\ell_1$ penalty $\phi(\U_i) :=
-\alpha||\U_i||_1$ as in [Mairal 2010]. We note that in contrast to
-the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha > 0$ controls the amount of penalization on the codes.
-
 - The constraint set $\mathcal C$ is a sparsity-inducing compact
 simple (mainly in the sense that the Euclidean projection onto
 $\mathcal C$ should be easy to compute) convex subset of $\mathbb R^p$
@@ -104,6 +93,18 @@ and
 $\mathcal S_p(\tau) := \mathbb B_{p,\ell_1}(\tau) \cap \mathbb R_+^p.$
 Other choices (e.g ElasticNet ball) are of course possible. The radius parameter $\tau > 0$ controls the
 amount of sparsity: smaller values lead to sparser atoms.
+
+- Each of the terms $\max_{\U_i \in \mathbb R^k}\dfrac{1}{2}||\X_i-\V\U_i||_2^2$ measures how well the current dictionary $\V$ explains data $\X_i$ from subject $i$.
+onstruction error for subject $i$. Both the $\U$ and $\V$ matrices are parameters to be estimated.
+The Ridge penalty term $\phi(\U_i) \equiv \frac{1}{2}\alpha||\U_i||_2^2$
+on the codes amounts to assuming that the energy of the decomposition is
+spread across the different samples. In the context of a specific
+neuro-imaging problem, if there are good grounds to assume that each
+sample / subject should be sparsely encoded across only a few atoms of
+the dictionary, then we can use the $\ell_1$ penalty $\phi(\U_i) :=
+\alpha||\U_i||_1$ as in [Mairal 2010]. We note that in contrast to
+the $\ell_1$ penalty, the Ridge leads to stable codes. The parameter $\alpha > 0$ controls the amount of penalization on the codes.
+
 -  Finally, $\Omega_{\text{Lap}}$ is the 3D Laplacian regularization functional
 defined by
 
@@ -139,7 +140,7 @@ A crucial advantage of using a BCD scheme is that it is parameter
 free: there is not step size to tune.
 
 # The Algorithm
-The resulting algorithm is adapted from [Mairal 2010].
+The resulting online algorithm is adapted from [Mairal 2010].
 
 - **Require**
   - Regularization parameters $\alpha, \gamma > 0$.
@@ -159,8 +160,8 @@ The resulting algorithm is adapted from [Mairal 2010].
   - BCD dictionary update: Compute update for dictionary $\V$ using the algorithm below.
 
 
-# Dictionary update
-For updating the dictionary, we proposed the following algorithm:
+# Updating the dictionary $\V$
+For updating the dictionary atoms $\V^j$ , we proposed the following algorithm:
 
 - **Require** $\V = [\V^1|\ldots|\V^k] \in \mathbb{R}^{p \times k}$
 (input dictionary).
@@ -179,9 +180,10 @@ where $$F_{\tilde{\gamma}}(\v,\a) \equiv \frac{1}{2}\|\v - \a\|_2^2 + \tilde{\ga
 
 Details and proofs are given in the <a href="https://hal.inria.fr/hal-01369134">NIPS paper</a>. Parameter selection is also discussed there.
 
-## Some qualitative results
+## Results
 <img src="/assets/figures/ssodl/nips1.png"/>
 <img src="/assets/figures/ssodl/nips2.png"/>
+<img src="/assets/figures/ssodl/nips3.png"/>
 
 ## Concluding remarks
 To extract structured functionally discriminating patterns

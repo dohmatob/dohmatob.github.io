@@ -16,7 +16,7 @@ In our NIPS 2016, <a href="https://hal.inria.fr/hal-01369134">paper</a>,
   method for obtaining decompositions of brain
 images with structured and sparse components (aka atoms). Sparsity is
 to be understood in the usual sense: the dictionary atoms are
-constrained to contain mostly zeros. This is imposed via an $\ell_1$-norm
+constrained to contain mostly zeros. This is imposed via an L1-norm
 constraint. By "structured", we mean that the atoms are piece-wise
 smooth and compact, thus making up blobs, as opposed to scattered
 patterns of activation. We propose to use a Sobolev (Laplacian)
@@ -41,8 +41,8 @@ $$\def\EE{\mathbb E}    \def\RR{\mathbb R}    \def\PP{\mathbb P}    \def\A{\math
 ## The problem	  
 Consider a stack $\X
 \in \mathbb R^{n \times p}$ of $n$ subject-level brain images
-$\X_1,\X_2,\ldots,\X_n$ each of shape $n_1 \times n_2 \times n_3$, seen as
-$p$-dimensional row vectors --with $p = n_1\times n_2 \times n_3$, the number of voxels. These could be images of fMRI activity
+$\X_1,\X_2,\ldots,\X_n$ each of shape $n_1 \times n_2 \times n_3$, over a mask $\mathcal M \subseteq \mathbb R^3$ containing $p$ voxels.
+Each image can thus be seen as $p$-dimensional row-vector. These images $\X_i$ could be images of fMRI activity
 patterns like statistical parametric maps of brain activation, raw
 pre-registered (into a common coordinate space) fMRI time-series, PET
 images, etc. We would like to decompose these images as a product of
@@ -114,14 +114,14 @@ $$
 \forall \v \in \mathbb R^p,
 $$
 
-$\nabla_x$ being the discrete spatial gradient operator
-along the $x$-axis (a $p$-by-$p$ matrix), $\nabla_y$ along the $y$-axis,
-etc., and $\Delta :=
-\nabla^T\nabla$ is the $p$-by-$p$ matrix representing the discrete
-Laplacian operator. This penalty is meant to impose blobs.
-The regularization parameter $\gamma \ge 0$ controls
-how much regularization we impose on the atoms, compared to the
-reconstruction error.
+ where $\nabla_x$ being the discrete spatial gradient operator
+ along the $x$-axis (**N.B.:** the input vector $\v$ is unmasked into a 3d image according to the afore-mentioned mask $\mathcal M$ before the image gradient is computed),
+ etc., and $\Delta :=
+ \nabla^T\nabla$ is the $p$-by-$p$ matrix representing the discrete
+ Laplacian operator. This penalty is meant to impose blobs.
+ The regularization parameter $\gamma \ge 0$ controls
+ how much regularization we impose on the atoms, compared to the
+ reconstruction error.
 
 The above formulation, which we dub *Smooth Sparse Online Dictionary-Learning* (Smooth-SODL) is inspired by, and generalizes the standard
 dictionary-learning framework of [Mairal 2010] --henceforth referred to as *Sparse Online Dictionary-Learning* (SODL); setting $\gamma = 0$, we recover SODL [Mairal 2010].

@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Beward of standardizing data before running PCA!"
+title:  "Baware of standardizing data before running PCA!"
 date:   2017-04-27 15:38
 categories: research
 images:
 
  - url: /assets/scaling_files/scaling_6_0.png
- - alt: Beward of standardizing data before running PCA
- - title: Beward of standardizing data before running PCA
+ - alt: Baware of standardizing data before running PCA
+ - title: Baware of standardizing data before running PCA
 
 ---
 

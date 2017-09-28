@@ -7,7 +7,7 @@ order: 3
 
 Presentation slides
 ===================
-- Progress report 60% through the PhD can be found <a href="https://drive.google.com/file/d/0B-njZxsmwjYNd2UyRVlFV2kyRDA/view?usp=sharing">here</a>.
+- Slides for my PhD defense can be found <a href="https://github.com/dohmatob/thesis/blob/master/slides.pdf">here</a>.
 
 
 Publications

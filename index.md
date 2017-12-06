@@ -8,8 +8,8 @@ order: 1
 
 <p>
 Hi there. Welcome to my blog. I'm part of the
-<a href="https://team.inria.fr/parietal/"> Parietal Team, INRIA / CEA</a> where I completed a PhD
-in Computer Science under the supervision of
+<a href="https://team.inria.fr/parietal/"> Parietal Team, INRIA / CEA</a>, where I completed a PhD
+in Computer Science in September 2017 under the supervision of
 <a href="https://team.inria.fr/parietal/bertrand-thirions-page/">Bertrand Thirion</a> and
 <a href="http://gael-varoquaux.info/">Gael Varoquaux</a>.
 My interests include math, machine learning,

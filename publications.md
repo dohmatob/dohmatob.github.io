@@ -5,9 +5,10 @@ permalink: /publications/
 order: 3
 ---
 
-Presentation slides
-===================
-- Slides for my PhD defense can be found <a href="https://github.com/dohmatob/thesis/blob/master/slides.pdf">here</a>.
+My PhD (syn)thesis
+==================
+- The report can be found <a href="https://tel.archives-ouvertes.fr/tel-01630295">here</a>.
+- Slides for the defense can be found <a href="https://github.com/dohmatob/thesis/blob/master/slides.pdf">here</a>.
 
 
 Publications

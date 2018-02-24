@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Discrete De Rham-Hodge cohomology theory: application to game theory and statistical ranking (Part I)"
+title:  "Discrete de Rham-Hodge cohomology theory: application to game theory and statistical ranking (Part I)"
 date:   2018-02-22 13:26
 categories: research
 images:
@@ -20,8 +20,8 @@ Here we review these connections.
 *(Figure is courtesy of Jiang et al. ["Statistical ranking and combinatorial Hodge theory"][6])*
 
 ## Prerequisites
-The ideas presented here should be directly accessible to anyone with a some acquaintance with the
-following elementary concepts (in decreasing order of importance)
+The ideas presented here should be directly accessible to anyone bearing even just a
+skimpy acquaintance with the following elementary concepts (in decreasing order of importance)
 
 - Algebra: sets, Abelian groups, vector spaces matrices / linear transformations, kernel, image, dual space, rank-nullity theorem
 
@@ -39,7 +39,7 @@ $$
 $$
 
 ## A criminal's view on cohomology
-It is well known that on a smooth $n$-dimensional manifold $M$ (Def: $M$ is a *separable topological space* in which each point $x \in M$ has a neighborhood $U_x \ni x$ which is *diffeomorphic* to an open subset of $V_x$ of $\mathbb R^n$), a *conservative* vector field is *irrotational*, i.e 
+It is well known that on an $n$-dimensional smooth manifold $M$ (Def: $M$ is a *topological space* in which each point $x \in M$ has a neighborhood $U_x \ni x$ which is *homeomorphic* to an open subset $V_x$ of $\mathbb R^n$), a *conservative* vector field is *irrotational*, i.e 
 
 $$\text{curl}(\underbrace{\text{grad}(f)}_{\text{conservative}}) = 0,
 $$
@@ -50,7 +50,7 @@ for any smooth function $f: M \rightarrow \mathbb R$. Recall that $\operatorname
 **Question (Q1):** Is the converse true ? That is if $F$ is a vector field with $\text{curl}(F) = 0$, is it true that $X = \grad(f)$, the gradient of some scalar potential field $f$ ?
 
 #### Example of "global obstruction" to (Q1)
-Let's produce an examplar scenario where **(Q1)** might not have an affirmative answer. Let $M = \mathbb R - \\{(0,0)\\}$, i.e the plane with the origin removed, and consider the vector field defined on $M$ by $F(x, y) := \left(-\frac{y}{x^2 + y^2}, \frac{x}{x^2 + y^2}\right)$. By [Stocke's Theorem][3], it is clear that the flux of $F$ along every closed loop which goes clockwise around the origin once is non-zero. This is because $F(x, y)$ is always a tangent at $(x, y)$, and points clockwise. However, a direct computation shows that $\text{curl}(F) = 0$.
+Let's produce an examplar scenario where **(Q1)** has a non-affirmative answer. Let $M = \mathbb R - \\{(0,0)\\}$, i.e the plane with the origin removed, and consider the vector field defined on $M$ by $F(x, y) := \left(-\frac{y}{x^2 + y^2}, \frac{x}{x^2 + y^2}\right)$. By [Stocke's Theorem][3], it is clear that the flux of $F$ along every closed loop which goes clockwise around the origin once is non-zero. This is because $F(x, y)$ is always a tangent at $(x, y)$, and points clockwise. However, a direct computation shows that $\text{curl}(F) = 0$.
 
 
 #### Cohomological reformulation of (Q1)
@@ -61,10 +61,10 @@ $$
 $$
 
 Let's denote this  group $H^1(M, \mathbb R)$.
-If $\|H^1(M, \mathbb R)\| = 1$ so that $H^1(M, \mathbb R) = \\{ 0 \\}$ and $\text{ker}(\text{curl}) = \text{im}(\text{grad})$, then the answer to the above question **(Q1)** is affirmative. Thus $H^1(M, \mathbb R)$  measures the "obstruction" to answering **(Q1)** affirmatively. The "$H$" in $H^1(M, \mathbb R)$ stands for *homology* in co-*homology*, a concept which we will now explore.
+If $\|H^1(M, \mathbb R)\| = 1$ so that $H^1(M, \mathbb R) = \\{ 0 \\}$ and $\text{ker}(\text{curl}) = \text{im}(\text{grad})$, then the answer to the above question **(Q1)** is affirmative. Thus $H^1(M, \mathbb R)$  measures the "obstruction" to answering **(Q1)** affirmatively. The "$H$" in $H^1(M, \mathbb R)$ denotes the *homology* in co-*homology*, a concept which we will now explore.
 
 
-The [De Rham co-chain complexe][1] of $M$ is the chain
+The [de Rham co-chain complexe][1] of $M$ is the chain
 
 $$
 0 \longrightarrow \Omega^0(M) \overset{d^1=\operatorname{grad}}{\longrightarrow} \Omega^1(M) \overset{d^2=\operatorname{curl}}{\longrightarrow} \Omega^2(M) \overset{d^3}{\longrightarrow} \ldots \Omega^{k-1}(M) \overset{d^k}{\longrightarrow} \Omega^{k}(M) \ldots \overset{d^n}{\longrightarrow} \Omega^n(M) \longrightarrow 0.
@@ -81,7 +81,7 @@ $$
 H^k(M,\mathbb R) := \dfrac{\operatorname{ker}(d^{k+1})}{\operatorname{im}(d^k)},
 $$
 
-called the $k$th De Rham cohomology of $M$. Amongst many other fabulous predictions, one can show that if $M$ and $M'$ are of same "homotopy type" (e.g the whole of $\mathbb R^n$ has the same homotopy type as any point in it! Two smooth curves with the same endpoints have the same homotopy type. And so on...), then they have the same cohomology.
+called the $k$th de Rham cohomology of $M$. Amongst many other fabulous predictions, one can show that if $M$ and $M'$ are of same "homotopy type" (e.g the whole of $\mathbb R^n$ has the same homotopy type as any point in it! Two smooth curves with the same endpoints have the same homotopy type. And so on...), then they have the same cohomology.
 
 In this new parlance, one restate **(Q1)** as asking whether the 1st De cohomology
 
@@ -102,7 +102,7 @@ Since a smooth manifold is locally flat, it then follows that the answer to **(Q
   
 
 ### Some "computations"
-To wrap up this introductory section, let's note the following algebraic topological facts about the De Rham cohomology:
+To wrap up this introductory section, let's note the following algebraic topological facts about the de Rham cohomology:
 
 - *(1)* $H^0(M, \mathbb R) = \ker(\grad)/\\{0\\} = \ker(\grad) \cong \mathbb R^c$, where $c$ is the number of "topologically connected components" of $M$.
 
@@ -142,7 +142,7 @@ $$
 \Omega^k(M) = \im(d^{k-1}) \oplus \mathcal H^k(M,\mathbb R) \oplus \im(\delta_k).
 \end{equation}
 
-*Sketch of proof.* Soit $A$, $B$ des matrices avec $AB = 0$.  Soit la matrice $\Delta := A^* A + BB^* $, matrice psd d'ordre $n$ dont on peut montrer que son noyeau vaut $\ker(\Delta) = \ker(A^* ) \cap \ker(B)$, qui est biensur isomorphe au groupe  $H^1 :=\ker(A)/\im(B)$. Par le theoreme de décomposition de Fredholm (algèbre liniaire élementaire) et le fait que $\Delta^* = \Delta$, l'on a
+*Sketch of proof.* Soitent $A$, $B$ des matrices avec $AB = 0$, et donc $\im(A) \subseteq \ker(B)$.  Soit la matrice $\Delta := A^* A + BB^* $, matrice psd d'ordre $n$. Il n'est pas difficile de montrer que son noyeau vaut $\ker(\Delta) = \ker(A^* ) \cap \ker(B)$, qui est biensur isomorphe au groupe  $H^1 :=\ker(A)/\im(B)$. Par le theoreme de décomposition de Fredholm (algèbre liniaire élementaire) et le fait que $\Delta^* = \Delta$, l'on a
 
 $$
 \mathbb R^n = \ker(\Delta) \oplus \ker(\Delta)^\perp = \ker(\Delta) \oplus \im(\Delta) = H^1 \oplus \im(A^* ) \oplus \im(B).
@@ -151,7 +151,15 @@ $$
 Il suffit alors the prendre $A = d^{k+1}$ et $B = d^k$ pour obtenir l'annoncé. $\quad\quad\quad\quad\quad\quad\quad\quad\quad\Box$
 
 ## Next time
-In the next post we shall construct de De Rham cohomology and Hodge decomposition of an abstract simplicial complex, and apply it to ranking (obtaining the so-called [HodgeRank][6]) and game theory...
+In the next post we shall
+
+- construct the de Rham cohomology and Hodge decomposition of an abstract simplicial complex
+
+- apply these constructions to ranking --obtaining the so-called [HodgeRank][6]-- and to game theory
+
+- write some python code!
+
+The figure below is a glimpse.
 
 <img src="/assets/figures/ranking/committee.png"/>
 

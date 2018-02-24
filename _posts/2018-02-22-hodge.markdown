@@ -27,9 +27,6 @@ following elementary concepts (in decreasing order of importance)
 
 - Differential geometry: the idea of a smooth manifold, scalar and vector fields, differential forms, gradient, divergence, curl, Stokes theorem
 
-
-## Some
-
 That notwithstanding, as we go along I shall try my best to review some of these concepts in context, to the minimal amount of detail which is sufficient for my purposes.
 
 {% include mathjax.html %}
@@ -41,7 +38,7 @@ $$
 \def\dim{\operatorname{dim}}
 $$
 
-## A criminal's view on comohology
+## A criminal's view on cohomology
 It is well known that on a smooth $n$-dimensional manifold $M$ (Def: $M$ is a *separable topological space* in which each point $x \in M$ has a neighborhood $U_x \ni x$ which is *diffeomorphic* to an open subset of $V_x$ of $\mathbb R^n$), a *conservative* vector field is *irrotational*, i.e 
 
 $$\text{curl}(\underbrace{\text{grad}(f)}_{\text{conservative}}) = 0,
@@ -105,7 +102,7 @@ Since a smooth manifold is locally flat, it then follows that the answer to **(Q
   
 
 ### Some "computations"
-To wrap up this introductory section, let's note the following algebraic topological facts about the De Rham comohology:
+To wrap up this introductory section, let's note the following algebraic topological facts about the De Rham cohomology:
 
 - *(1)* $H^0(M, \mathbb R) = \ker(\grad)/\\{0\\} = \ker(\grad) \cong \mathbb R^c$, where $c$ is the number of "topologically connected components" of $M$.
 
@@ -154,7 +151,9 @@ $$
 Il suffit alors the prendre $A = d^{k+1}$ et $B = d^k$ pour obtenir l'annoncé. $\quad\quad\quad\quad\quad\quad\quad\quad\quad\Box$
 
 ## Next time
-In the next post we shall construct de De Rham cohomology and Hodge decomposition of an abstract simplicial complex, and apply it to ranking (obtaining the so-called [HodgeRank][6]) and game theory.
+In the next post we shall construct de De Rham cohomology and Hodge decomposition of an abstract simplicial complex, and apply it to ranking (obtaining the so-called [HodgeRank][6]) and game theory...
+
+<img src="/assets/figures/ranking/committee.png"/>
 
 
   [1]: https://en.wikipedia.org/wiki/De_Rham_cohomology

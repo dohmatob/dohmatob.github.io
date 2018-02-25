@@ -13,11 +13,15 @@ images:
 
 *Cohomology* is a central concept in algebraic topology and geometry. Oddly enough, this theory applies to certain *concrete* problems arising in machine learning (e.g globally consistent ranking of items in an online shop like Amazon or NetFlix) and game theory (e.g approximating multi-player non-cooperative games with potential games, in view of computing approximate Nash equilibria of the former).
 
-Here we review these connections.
+This is the first of a unified series of posts to explore the main ideas behind these developments.
+We will start by a short promenade which ends up with the so-called Hodge-decomposition, the central tool. Then In the subsequent posts we shall
 
-<img src="/assets/figures/ranking/hodge.png"/>
+- construct the de Rham cohomology and Hodge decomposition of an abstract simplicial complex
 
-*(Figure is courtesy of Jiang et al. ["Statistical ranking and combinatorial Hodge theory"][6])*
+- apply these constructions to ranking --obtaining the so-called [HodgeRank][6]-- and to game theory
+
+- write some python code!
+
 
 ## Prerequisites
 The ideas presented here should be directly accessible to anyone bearing even just a
@@ -138,11 +142,22 @@ $$
 \mathcal H^k(M,\mathbb R) \cong \ker(\delta_k) \cap \ker(d^{k + 1}).
 $$
 
-- *(b) If  $M$ is compact, then $H^k(M,\mathbb R) \cong \mathcal H^k(M,\mathbb R)$, and we have the  decomposition*
+- *(b) If  $M$ is compact, then $H^k(M,\mathbb R) \cong \mathcal H^k(M,\mathbb R)$, and we have the orthogonal decomposition*
 
 \begin{equation}
 \Omega^k(M) = \im(d^{k-1}) \oplus \mathcal H^k(M,\mathbb R) \oplus \im(\delta_k).
 \end{equation}
+
+In particular for the case $k = 1$, we have the decomposition
+
+\begin{equation}
+\Omega^k(M) = \im(\grad) \oplus \mathcal H^1(M,\mathbb R) \oplus \im(\curl).
+\end{equation}
+
+
+<img src="/assets/figures/ranking/hodge.png"/>
+*(Figure is courtesy of Jiang et al. ["Statistical ranking and combinatorial Hodge theory"][6])*
+
 
 *Sketch of proof.* Soitent $A$, $B$ des matrices avec $AB = 0$, et donc $\im(A) \subseteq \ker(B)$.  Soit la matrice $\Delta := A^* A + BB^* $, matrice psd d'ordre $n$. Il n'est pas difficile de montrer que son noyeau vaut $\ker(\Delta) = \ker(A^* ) \cap \ker(B)$, qui est biensur isomorphe au groupe  $H^1 :=\ker(A)/\im(B)$. Par le theoreme de décomposition de Fredholm (algèbre liniaire élementaire) et le fait que $\Delta^* = \Delta$, l'on a
 

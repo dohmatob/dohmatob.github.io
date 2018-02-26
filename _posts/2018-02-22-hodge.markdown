@@ -22,6 +22,12 @@ We will start by a short promenade which ends up with the so-called Hodge-decomp
 
 - write some python code!
 
+## Initial motivation
+My interest in these things got sparkled after a very productive discussion with [Anna Korba][7] on
+a [problem][8] I was trying to solve: how to approximate a digraph (directed graph) with a DAG (directed
+acyclic graph), without "losing too much information"'. It turns out that this problem is completely
+solved by the Hodge decomposition on the space of flows on the edges, and then keeping only the curl-free component, which in fact is a DAG (no cycles)!
+
 
 ## Prerequisites
 The ideas presented here should be directly accessible to anyone bearing even just a
@@ -48,7 +54,7 @@ It is well known that on an $n$-dimensional smooth manifold $M$ (Def: $M$ is a *
 $$\text{curl}(\underbrace{\text{grad}(f)}_{\text{conservative}}) = 0,
 $$
 
-for any smooth function $f: M \rightarrow \mathbb R$. Recall that $\operatorname{grad}(f) := \left(\frac{\partial f}{\partial x_1},\ldots,\frac{\partial f}{\partial x_n}\right) = \sum_{i}\frac{\partial f}{\partial x_i} dx_i$, a [differential $1$-form][4] on $M$. As regards the object "$dx_i$", it should be seen as a linear form on the tangent bundle, which returns the $i$th component of a (co-)vector, i.e $dx_i(a) = a_i$.
+for any smooth  function $f: M \rightarrow \mathbb R$. Recall that a smooth function on $M$ is one which is infinitely differentiable on $M$, and we'll say that $f$ is of class $\mathcal C^\infty$ on $M$ or simply write $f \in \mathcal C^\infty(M)$. Also recall that $\operatorname{grad}(f) := \left(\frac{\partial f}{\partial x_1},\ldots,\frac{\partial f}{\partial x_n}\right) = \sum_{i}\frac{\partial f}{\partial x_i} dx_i$, a [differential $1$-form][4] on $M$. As regards the object "$dx_i$", it should be seen as a linear form on the tangent bundle, which returns the $i$th component of a (co-)vector, i.e $dx_i(a) = a_i$.
 
 
 **Question (Q1):** Is the converse true ? That is if $X$ is a vector field with $\text{curl}(X) = 0$, is it true that $X = \grad(f)$, the gradient of some scalar potential field $f$ ?
@@ -61,11 +67,15 @@ Let's produce an examplar scenario where **(Q1)** has a non-affirmative answer. 
 In question **(Q1)**, ultimately, the interesting problem is the estimation of the size of the  group
 
 $$
- \dfrac{\text{ker}(\text{curl})}{\text{im}(\text{grad})} := \{X + \text{im}(\text{grad}) | \text{curl}(X) = 0\}.
+H^1 := \dfrac{\text{ker}(\text{curl})}{\text{im}(\text{grad})} := \{X + \text{im}(\text{grad})\;|\;X\text{ is a vector field with }\curl(X) = 0\},
 $$
 
-Let's denote this  group $H^1(M, \mathbb R)$.
-If $\|H^1(M, \mathbb R)\| = 1$ so that $H^1(M, \mathbb R) = \\{ 0 \\}$ and $\text{ker}(\text{curl}) = \text{im}(\text{grad})$, then the answer to the above question **(Q1)** is affirmative. Thus $H^1(M, \mathbb R)$  measures the "obstruction" to answering **(Q1)** affirmatively. The "$H$" in $H^1(M, \mathbb R)$ denotes the *homology* in co-*homology*, a concept which we will now explore.
+where
+$
+X + \im(\grad) := \\{ X  + \grad(f)\;|\; f \text{ is a smooth function on }M \\},
+$
+all the vector fields which are equal to $X$, up to within an irrational error.
+If $\|H^1\| = 1$ so that $H^1(M, \mathbb R) = \\{ 0 \\}$ and $\text{ker}(\text{curl}) = \text{im}(\text{grad})$, then the answer to the above question **(Q1)** is affirmative. Thus $H^1$  measures the "obstruction" to answering **(Q1)** affirmatively. The "$H$" in $H^1$ denotes the *homology* in co-*homology*, a concept which we will now explore.
 
 
 The [de Rham co-chain complexe][1] of $M$ is the chain
@@ -80,6 +90,8 @@ Also, since ${n\choose n-k} = {n\choose k}$, it follows that $\Omega^k \cong \Om
 
 The symbol $d^k$ is the restriction on $\Omega^k(M)$ of the [exterior derivative][5] $d$ of the manifold $M$. All we need to know here is that $d$ is a function defined on the exterior *graduated algebra* $\Omega(M) := \oplus_k \Omega^k(M)$ and is constrained to uniquely satisfy many properties, the most important being $d \circ d = 0$.
 This in turn implies that $d^{k+1} \circ d^k = 0$, i.e $\im(d^k)$ is a subspace of $\ker(d^{k+1})$ for all $k$, which is nothing but an exotic higher-order reformulation of the principle we saw in the of this post, namely that every conservative vector field is irrotational!
+
+It should be noted that the wedge product defining the elements of the $\Omega^k(M)$ is anti-symmetric, meaning that if the terms in $dx_{i_1} \wedge \ldots \wedge dx_{i_k}$ are permuted, then the result product picks up a sign equal to the sign of the applied permutation. Thus in particular, $\Omega^1(M)$ is the space of anti-symmetric vector fields on $M$.
 
 One may now form the group
 
@@ -187,3 +199,5 @@ The figure below is a glimpse.
   [4]: https://fr.wikipedia.org/wiki/Forme_diff%C3%A9rentielle
   [5]: https://fr.wikipedia.org/wiki/Forme_diff%C3%A9rentielle#Dérivée_extérieure
   [6]: https://link.springer.com/article/10.1007/s10107-010-0419-x
+  [7]: https://perso.telecom-paristech.fr/akorba/
+  [8]: https://math.stackexchange.com/q/2647488/168758

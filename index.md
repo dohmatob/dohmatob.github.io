@@ -7,12 +7,15 @@ order: 1
 <img style="float: left; margin-right: 2em;" width="300px" src="/assets/photo.jpg" />
 
 <p>
-Hi there. Welcome to my blog. I'm a part of the
-<a href="https://team.inria.fr/parietal/"> Parietal Team, INRIA / CEA</a>, where I completed a PhD
-in Computer Science (studying problems at the intersection of machine learning and neuroscience)
+Welcome to my blog! I'm machine-learning research scientist at <a href="https://www.criteo.com">Criteo</a>. Formally, I was a
+post-doctoral fellow with the
+<a href="https://team.inria.fr/parietal/"> Parietal Team, INRIA / CEA</a>, the same lab where I completed
+a PhD in Computer Science (tackling problems at the intersection of machine learning and neuroscience)
 in September 2017 under the supervision of
 <a href="https://team.inria.fr/parietal/bertrand-thirions-page/">Bertrand Thirion</a> and
 <a href="http://gael-varoquaux.info/">Gael Varoquaux</a>.
+
+
 My interests include math, machine learning,
 convex optimization, algorithmic game theory, optimal transport (very recently), computational and theoretical neuroscience.
 </p>

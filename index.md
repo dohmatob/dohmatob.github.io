@@ -4,7 +4,7 @@ title: Home
 permalink: /
 order: 1
 ---
-<img style="float: left; margin-right: 2em;" width="300px" src="/assets/photo.jpg" />
+<img style="float: left; margin-right: 2em;" width="175px" src="/assets/photo.jpg" />
 
 <p>
 Welcome to my blog! I'm machine-learning research scientist at <a href="https://www.criteo.com">Criteo</a>. Formally, I was a

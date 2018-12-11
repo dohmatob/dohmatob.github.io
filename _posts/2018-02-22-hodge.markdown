@@ -60,7 +60,7 @@ for any smooth  function $f: M \rightarrow \mathbb R$. Recall that a smooth func
 **Question (Q1):** Is the converse true ? That is if $X$ is a vector field with $\text{curl}(X) = 0$, is it true that $X = \grad(f)$, the gradient of some scalar potential field $f$ ?
 
 #### Example of "global obstruction" to (Q1)
-Let's produce an examplar scenario where **(Q1)** has a non-affirmative answer. Let $M = \mathbb R - \\{(0,0)\\}$, i.e the plane with the origin removed, and consider the vector field defined on $M$ by $X(x, y) := \left(-\frac{y}{x^2 + y^2}, \frac{x}{x^2 + y^2}\right)$. By [Stocke's Theorem][3], it is clear that the flux of $X$ along every closed loop which goes clockwise around the origin once is non-zero. This is because $X(x, y)$ is always a tangent at $(x, y)$, and points clockwise. However, a direct computation shows that $\text{curl}(X) = 0$.
+Let's produce an examplar scenario where **(Q1)** has a non-affirmative answer. Let $M = \mathbb R - \\{(0,0)\\}$, i.e the plane with the origin removed, and consider the vector field defined on $M$ by $X(x, y) := \left(-\frac{y}{x^2 + y^2}, \frac{x}{x^2 + y^2}\right)$. By [Stoke's Theorem][3], it is clear that the flux of $X$ along every closed loop which goes clockwise around the origin once is non-zero. This is because $X(x, y)$ is always a tangent at $(x, y)$, and points clockwise. However, a direct computation shows that $\text{curl}(X) = 0$.
 
 
 #### Cohomological reformulation of (Q1)

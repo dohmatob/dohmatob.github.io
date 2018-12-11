@@ -16,7 +16,7 @@ Checkout my list of publications on <a href="https://scholar.google.fr/citations
 <!--  </iframe> -->
 <!-- {% endraw %} -->
 
-My PhD (syn)thesis
+My Phd (syn)thesis
 =======================
 - The report can be found <a href="https://tel.archives-ouvertes.fr/tel-01630295">here</a>.
 - Slides for the defense can be found <a href="https://github.com/dohmatob/thesis/blob/master/slides.pdf">here</a>.

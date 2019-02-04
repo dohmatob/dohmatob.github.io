@@ -1,9 +1,19 @@
 ---
 layout: page
-title: Publications
-permalink: /publications/
+title: Research
+permalink: /Research/
 order: 3
 ---
+
+These days, my research focuses on
+
+- optimization under uncertainty (distributional robustness, adversarial attacks, etc.)
+- recommender systems
+- optimal transport
+- learning theory (especially theoretical deep-learning)
+- some aspects of game theory (bidding, bandits, etc.)
+
+I also have a sustained interest in computational and theoretical neuroscience.
 
 Publications
 ===============
@@ -15,6 +25,11 @@ Checkout my list of publications on <a href="https://scholar.google.fr/citations
 <!--  &nbsp; -->
 <!--  </iframe> -->
 <!-- {% endraw %} -->
+
+Students
+========
+- Morgane Goibert (ENSAE / Telecom): MSc. internship from January 2017 -- present
+
 
 My Phd (syn)thesis
 =======================

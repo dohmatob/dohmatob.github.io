@@ -1,0 +1,294 @@
+---
+layout: post
+title:  "Fenchel-Rockafellar duality theorem, one ring to rule'em all! - Part 1"
+date:   2019-10-31 11:30
+categories: research
+images:
+
+ - url: /assets/figures/duality/duality.png
+ - alt: Fenchel-Rockafellar duality theorem, one ring to rule'em all!
+ - title: Fenchel-Rockafellar duality theorem, one ring to rule'em all!
+
+---
+
+
+{% include mathjax.html %}
+$$
+\def\sign{\operatorname{sign}}
+\def\qed{\Box}
+\def\im{\operatorname{im}}
+\def\grad{\operatorname{grad}}
+\def\curl{\operatorname{curl}}
+\def\div{\operatorname{div}}
+\def\dim{\operatorname{dim}}
+\def\X{\mathcal X}
+\def\Y{\mathcal Y}
+\def\C{\mathcal C}
+\def\M{\mathcal M}
+\def\Xstar{\X^\star}
+\def\Ystar{\Y^\star}
+\def\Astar{A^\star}
+\def\BX{\mathbb B_{\X}}
+\def\BXstar{\mathbb B_{\Xstar}}
+\def\Xss{\X^{\star\star}}
+\def\Yss{\Y^{\star\star}}
+\def\gss{g^{\star\star}}
+\def\fstar{f^\star}
+\def\gstar{g^\star}
+\def\xstar{x^\star}
+\def\ystar{y^\star}
+$$
+
+
+## I -- Introduction
+The *Fenchel-Rockafellar duality theorem (FRDT)*, named after mathematicians Werner Fenchel and R.T Rockafellar,
+is perhaps the most powerful tool in all of convex analysis. The theorem arises from studying the optimization problem
+
+$$
+p = \inf_{x \in \X}\;f(Ax) + g(x),
+$$
+
+where $A: \X \rightarrow \Y$ is a (bounded) linear operator between "Banach spaces"" $\X$ and $\Y$, and functions $g :\X \rightarrow (-\infty, +\infty]$ and $f:\Y \rightarrow (-\infty, +\infty]$.
+$\Astar: \Ystar \rightarrow \Xstar$ is the "adjoint" of $A$.
+FRDT is a result on the equivalence (under certain technical conditions) of the above so-called *primal* problem, with its *dual* problem given below
+
+$$
+d = \sup_{\ystar \in \Ystar}\;-\fstar(-\ystar) - \gstar(\Astar\ystar).
+$$
+
+Here $\Ystar$ is the "topological dual" of the Banach space $\Y$ and $\fstar$ denotes "convex / Fenchel conjugation", a kind of Fourier transform, but for the subject of convex analysis!
+The precise meaning of these technical concepts will become clear later.
+
+<img src="/assets/figures/duality/duality.png"/>
+
+**Fig. 1.** *(Figure courtesy of Wikipedia "In the following figure, the minimization problem on the left side of the equation is illustrated. One seeks to vary x such that the vertical distance between the convex and concave curves at x is as small as possible. The position of the vertical line in the figure is the (approximate) optimum.")*
+
+FRDT is so powerful that it can can be used to prove the <a href="https://en.wikipedia.org/wiki/Transportation_theory_(mathematics)#Duality_formula">*Robinstein-Kantorovich duality formula (RKDF)*</a> (optimal transport) in 2 lines or so! The world in which FRDT lives is semantically more mature than the usual notions of Lagrange duality, slack variables, and all the other assorted objects manipulated in linear programming, for example. However, it seems FRDT is still not known to the general technical public (ML people, etc.). My plan is to develop the theory, bottom-up, show-case a few practical and conceptual applications.
+
+***Why Banach spaces ?*** This is not *Abstract Nonsense!* To present FRDT in full generality,
+the kind of generality which allows it to be used to prove the RKDF of optimal transport, one needs to work in Banach spaces, not just Hilbert spaces, or worst still, some "$\mathbb R^n$". The good news is that "Banach spaces" (named after Polish mathematician Stefan Banach) are simpler than they sound. It's all about norms, transposes of matrices (or more formally "adjoints" of bounded linear operators), etc.
+
+I.1 Plan
+==========
+The exposition will be split into different parts, delivering by means of various blogposts (roughly two or threw max).
+
+- In this first blog-post, I'll start off with some central concepts in convex analysis (Banach spaces, dual spaces, Fenchel conjugates, subdiffirentials, etc.).
+
+- Subsequent blogposts will dive into the meat of the FRDT.
+
+- Several worked examples and exercises will be scattered in the middle of each blogpost. Readers are strongly advised to think about the exercises. Questions / hints may be asked in the comments section (at the end of each blogpost). I'll try to be as responsive as possible.
+
+Now that all the boring stuff is out of the way, let's get down to business.
+
+
+## II -- Preliminaries on convex analysis
+
+II.1 Banach spaces
+======================
+Given a Banach space $\X$ over the reals $\mathbb K=\mathbb R$ or complex numbers $\mathbb K=\mathbb C$,
+i.e a *complete* normed vector space over $\mathbb R$ or $\mathbb C$, with norm $$\|.\|$$ or $$\|\cdot\|_{\X}$$ in case there is a risk of confusion, its *topological dual* (or *dual* for short) will be denoted $\Xstar$. This is simply the space of all linear functions (aka *bras*, as referred to by physicists) $\langle \xstar|: \mathcal X \rightarrow \mathbb K$. The *bracket* $\langle \xstar,x\rangle$ denotes the action of the linear form $\xstar$ (or $\langle \xstar|$, to keep the previous *bra* terminology) on the point $x \in \X$ (also called a *ket*, and denoted $|x\rangle$, by physicists), i.e $\langle \xstar,x\rangle := \langle \xstar|(x) := \xstar(x) $. The space $\Xstar$ is a Banach space too, with norm given by 
+
+$$
+\|\xstar\|_* := \sup_{x \in \BX}\langle \xstar,x\rangle. \tag{2}
+$$
+
+Here $$\BX := \{x \in \X \mid \|x\| \le 1\}$$ is the unit ball of $\X$.
+For example if $\mathcal X=\C(\Omega)$ is the space of continuous functions on a compact topological space $\Omega$ endowed with the sup-norm of *uniform convergence*, namely
+$$\|u\| := \sup_{\omega \in \Omega}|u(\omega)|,
+$$
+then $\Xstar:=\M(\Omega)$ is simply the space of *Radon measures* on $\Omega$. This is a consequence of the celebrated  <a href="https://en.wikipedia.org/wiki/Riesz%E2%80%93Markov%E2%80%93Kakutani_representation_theorem">Riesz–Markov–Kakutani representation theorem</a>. For $u \in \C(\Omega)$ and $p \in \M(\Omega)$, the bracket $\langle u,p\rangle$
+then corresponds to taking the *expectation* of the function $u$  w.r.t to the measure $p$, i.e $\langle u,p\rangle := \mathbb E_{\omega \sim p}[u(\omega)] := \int_{\Omega} u dp$.
+
+Every Banach space $\X$ considered here will be assumed to be *reflexive*, which (roughly) means that $\X$ is equal to its respective *bi-dual* $\Xss$ (the dual of the dual of $\X$).
+
+Given a bounded linear operator $A:\X \rightarrow \Y$ between Banach spaces $\mathcal X$ and $\mathcal Y$, its adjoint $\Astar:\Ystar \rightarrow \Xstar$ is defined implicitly by the functional relation
+
+$$
+\langle \xstar,Ax\rangle = \langle \Astar\xstar,x\rangle,\;\forall (x,\xstar) \in \X \times \Xstar.
+$$
+
+For example, if $\X$ and $\Y$ are finite-dimensional real euclidean spaces (think of $\mathbb R^n$ and $\mathbb R^q$), then $A$ is simply a matrix, and $\Astar$ is its transpose!
+
+Given a subset $C \subseteq \X$, we define its *indicator function* $\chi_C: \mathcal X \rightarrow (-\infty, +\infty]$ by
+
+$$
+\chi_C(x) =
+\begin{cases}
+0,&\mbox{ if }x \in C,\\
++\infty,&\mbox{ else,}
+\end{cases}
+$$
+
+and its *support function* $\sigma_C:\Xstar \rightarrow (-\infty, +\infty]$ by
+
+$$
+\sigma_C(\xstar) := \sup_{x \in C}\;\langle \xstar,x\rangle.
+$$
+
+For example, the dual norm (defined in equation (1)) of the norm on $\X$ is the support function of the unit ball in $\X$.
+
+II.2 Subgradients, subdifferentials, and Fenchel conjugates
+==================================================================
+The *subdifferential* of the function $g: \X \rightarrow (-\infty, +\infty]$ at a point $x \in \X$, denoted $\partial g(x)$ is defined by
+
+$$
+\partial g(x) := \{v \in \Xstar \mid g(x') \ge g(x) + \langle v,x'-x\rangle\;\forall x' \in \X\}
+$$
+
+Every $v \in \partial g(x)$ is called a *subgradient* of $g$ at $x$. Of course, if $g$ is convex and differentiable at $x$, then $$\partial g(x) = \{ \nabla f(x) \}$$.
+On the other hand, if $g$ is say the L1 norm on $\mathbb R^n$, then $\partial g(x) = \Pi_{i=1}^n S_i$, where
+
+$$
+S_i := \partial |\cdot|(x_i) =
+\begin{cases}
+\sign(x_i),&\mbox{ if }x_i \ne 0,\\
+[-1,1],&\mbox{ else.}
+\end{cases}
+$$
+
+The *Fenchel conjugate* (aka *convex conjugate*) of $g$ is the function $\gstar:\Xstar \rightarrow (-\infty, +\infty]$ defined by
+
+$$
+\gstar(\xstar) := \sup_{x \in \X}\;\langle \xstar,x\rangle - g(x).
+$$
+
+Because $\gstar$ is a point-wise supremum of affine functions, it is automatically convex, even when $g$ is not convex! The *bi-conjugate* of $g$,
+denoted $\gss:\Xss (= \X) \rightarrow \Yss (= \Y)$, is defined as the Fenchel conjugate of $g^*$ (i.e the Fenchel conjugate of the Fenchel conjugate). It's not hard to show that
+
+$$
+g \ge \gss.
+$$
+
+
+***Young's Lemma.*** *$g(x) + \gstar(\xstar) \ge \langle \xstar,x\rangle$ for all $(x,\xstar) \in \X \times \Xstar$.*
+
+*Proof.* Follows directly from the definition of $\gstar(\xstar)$ as the supremum over $x$ of $\langle \xstar,x\rangle - g(x)$. $\qed$
+
+
+II.3 Examples
+================
+**Norms.** Let $\X$ be a (reflexive) Banach space with dual $\Xstar$. Using the fact that $$\|x\| \equiv \underset{z \in \Xstar,\;\|z\|_* \le 1}{\sup }\langle z,x\rangle$$, we immediately get
+
+$$
+\begin{split}
+\underset{x \in \X}{\text{sup }}\langle \xstar,x\rangle - \|x\| &= \underset{x \in \X}{\sup}\;\langle \xstar,x\rangle - \underset{z \in \Xstar,\;\|z\|_* \le 1}{\sup }\langle z,x\rangle = \underset{z \in \Xstar,\; \|z\|_* \le 1}{\inf }\underset{x \in \X}{\sup}\;\langle \xstar-z,x\rangle \\
+&= \underset{z \in \Xstar,\; \|z\|_* \le 1}{\inf }
+\begin{cases}
+0,&\mbox { if }z = \xstar,\\
++\infty, &\mbox{ otherwise}
+\end{cases}\\
+&= \begin{cases}0,&\mbox { if }\|\xstar\|_* \le 1,\\+\infty, &\mbox{ otherwise,}\end{cases}
+\end{split}
+$$
+
+where the second equality follows from [Sion's minimax theorem][1] (as an easy exercise, the reader should check that the hypotheses of the Theorem are satisfied).
+Thus $$\|.\|^* = \chi_{\BXstar},$$ the indicator function of the dual unit ball.
+
+
+**Linear functionals.**
+Let $\X$ be a Banach space and $c \in \Xstar$. Consider the function $g:\X \rightarrow (-\infty, +\infty]$ defined by $g(x) := \langle c, x\rangle$. BTW, this function can be identified with a point $\langle c|$ of $\Xstar$. One computes the Fenchel conjugate of $g$ as
+$$
+\gstar(\xstar) := \sup_{x \in \X}\langle \xstar,x\rangle - g(x) = \sup_{x \in \X}\langle \xstar - c,x\rangle = \chi_{\{c\}}(\xstar) = 
+\begin{cases}
+0,&\mbox{ if }\xstar = c,\\
++\infty,&\mbox{ else.}
+\end{cases}
+$$
+
+
+  [1]: https://en.wikipedia.org/wiki/Sion%27s_minimax_theorem
+  
+
+II.4 Exercises
+=================
+**Exercise 2.4.1.** What is the Fenchel conjugate of the function $g:\mathbb R^n \rightarrow (-\infty, +\infty]$ defined by $g(x) := \max (x_1,\ldots,x_p)$ ?
+
+**Solution.** <a href="https://math.stackexchange.com/a/2189259/168758">https://math.stackexchange.com/a/2189259/168758</a>.
+
+**Exercise 2.4.2.** Given a scalar $\lambda \ne 0$ and a point $a \in \X$, prove that:
+
+- $(x \mapsto \lambda g(x))^\star(\xstar) \equiv \lambda \gstar(\xstar/\lambda)$
+- $(x \mapsto \lambda g(x + a))^\star(x) \equiv \gstar(\xstar) - \langle a,\xstar\rangle$.
+
+*Hint.* Direct computation using the definition of Fenchel conjugates.
+
+**Exercise 2.4.4.** Let $\Omega$ be a compact probability space (e.g a probability simplex) and $p_0$ be a distribution thereupon.
+Show that negative-entropy $\M(\Omega) \mapsto (-\infty,+\infty]$ defined by
+
+$$
+H_{p_0}(p) := KL(P\|p_0) :=-\mathbb E_{\omega \sim p}\left[\log(p(\omega)/p_0(\omega))\right]
+$$
+
+and log-sum-exp $\C(\Omega) \mapsto (-\infty,+\infty]$ defined by
+
+$$
+LSE(u) := \log\mathbb E_{x \sim p_0}[\exp(u(x))]
+$$
+
+are Fenchel conjugates of each another.
+
+*Hint.* Direct computation.
+
+**Exercise 2.4.5.** Let $a \in \mathbb R^n$ and $\sigma_1,\ldots,\sigma_p > 0$, and consider the function $g:\mathbb R^n \rightarrow (-\infty, +\infty]$ defined by
+$$
+g(x)=
+\begin{cases}
+\|x\|_1,&\mbox { if }\sum_{i=1}^n \sigma_i^2x_i^2 \le 1,\\
++\infty,&\mbox{ else.}
+\end{cases}
+$$
+
+Show that
+
+$$\gstar(\xstar) = \sum_{i=1}^n\sigma_i^{-2}\max(|\xstar|-1, 0)^2_,\;\forall \xstar \in \mathbb R^n.
+$$
+
+*Hint:* First use the fact that $$\|\cdot\|_1$$ and
+$$\|\cdot\|_\infty$$ are dual norms of each other to rewrite $$\|\cdot\|_1$$ as the support function of the $\ell_\infty$ unit ball. You should get
+$$
+\gstar(\xstar) = \underset{z \in \mathbb R^n,\;\|z\|_\infty \le 1}{\min}\;\sqrt{\sum_{i=1}^n(z_i-\xstar_i)^2},
+$$
+ a simple separable optimization problem which can be solved implicitly to get eh claimed expression.
+  
+III -- The Fenchel-Rockafellar duality theorem
+--------------------------------------------------
+
+III.1 Motivating Linear Programming (LP)
+=================================================
+We motivate things with the Linear Programming (LP), a sub-field of convex optimization which basically gave birth to convex optimization and convex convex analysis (thanks to Lionid Kantorovich, R.T Rockafellar, Jean-Jaques Moreau, etc.). So, consider the case where $\Y$ be a real Banach space, and $\X$ and $A$ be as before. Let $b \in \Y$ and $c \in \Xstar$, and consider the problem
+
+$$
+p = \inf_{Ax \ge b}\langle c, x\rangle \tag{2}.
+$$
+
+It's well-know that the "dual" of the above problem is the problem
+
+$$
+d=\sup_{\xstar \in \Xstar,\; \xstar \ge 0,\;\Astar\xstar = c}\langle b,\xstar\rangle.
+$$
+
+Moreover, one has $p \ge d$ with equality under certain delicate conditions.
+
+*But where the heck does this correspondence come from ?*
+
+In a sense, the aim of this blogpost to explain this correspondence, using the modern framework of convex analysis. I mean "modern" in the sense that we won't be talking about things like "slack variables", "slater's condition", "Lagrange multipliers", etc. Only Fenchel conjugates, subdifferentials, etc. We will still be talking about Karush-Kuhn-Tucker (KKT) conditions though.
+
+Now, one first observes that problem (2) above can be succinctly rewritten as
+
+$$
+\inf_{x \in \X}f(Ax) + g(x) \tag{3}
+$$
+
+by defining $g:\X \rightarrow (-\infty, +\infty]$ by $g(x) := \langle c, x\rangle$, and $f:\Y \rightarrow (-\infty,+\infty]$ by
+
+$$
+f(y) := \begin{cases}
+0,&\mbox{ if }y \ge b,\\ +\infty,&\mbox{ else.}
+\end{cases}
+$$
+
+III.2 General FRDT
+======================
+In general, let $\X$ and $\Y$ be (reflexive) Banach spaces and $A:\X \rightarrow \Y$ be a bounded linear operator. Let $g:\X \rightarrow (-\infty, +\infty]$ and $f: \Y \rightarrow (-\infty, +\infty]$ be functions (not necessarily convex!), and consider the optimization (2).
+
+*To be continued...*

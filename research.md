@@ -5,6 +5,11 @@ permalink: /Research/
 order: 3
 ---
 
+Working papers (which are not yet on ArXiv, etc.)
+==============
+- <a href="/assets/preprints/2020-11-11-implicit-bias.pdf">Implicit bias of gradient-descent: fast convergence rates</a>
+
+
 Publications
 ===============
 Checkout my list of publications on <a href="https://scholar.google.fr/citations?user=FDWgJY8AAAAJ&hl=fr">Google Scholar</a>.

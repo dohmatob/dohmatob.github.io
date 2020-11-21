@@ -5,9 +5,9 @@ permalink: /Research/
 order: 3
 ---
 
-Working papers (which are not yet on ArXiv, etc.)
+Working papers (not yet in conferences, journals, etc.)
 ==============
-- <a href="/assets/preprints/2020-11-11-implicit-bias.pdf">Implicit bias of any algorithm: bounding bias via margin</a>
+- <a href="/assets/preprints/2020-11-11-implicit-bias.pdf">Implicit bias of any algorithm: bounding bias via margin</a> (preprint)
 
 
 Publications
@@ -25,12 +25,12 @@ Research interests
 ----
 These days, my research focuses on
 
-- adversarial examples
-- optimization under uncertainty (adversarial attacks, etc.)
-- recommender systems
-- learning theory (especially theoretical deep-learning)
+- adversarial examples (generation, detection, theory of)
+- optimization under uncertainty (distributional robustness, robust RL, etc.)
+- understanding deep-learning
+- robust ranking (robust rank-aggregation, etc.)
 - representation learning (determinantal point processes, etc.)
-- reinforcement learning
+
 
 I also have a sustained interest in computational and theoretical neuroscience.
 
@@ -45,11 +45,5 @@ Master students
 
 PhD students
 ===
--  Morgane Goibert: Stastical Understanding of Adversarial Examples (co-supervised with Stéphan Clémançon): to begin end of December.
+-  Morgane Goibert: Stastical Understanding of Adversarial Examples (co-supervised with Stéphan Clémançon). (2019 -- present) 
 
-My Phd thesis
----
-My Phd in computer science (defended September 2017) focused on problems at the intersection of machine learning, neuroscience, neuroimaging.
-
-- The report can be found <a href="https://tel.archives-ouvertes.fr/tel-01630295">here</a>.
-- Slides for the defense can be found <a href="https://github.com/dohmatob/thesis/blob/master/slides.pdf">here</a>.

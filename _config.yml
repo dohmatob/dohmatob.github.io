@@ -19,3 +19,29 @@ markdown: kramdown
 exclude: [Makefile, upload.sh]
 
 theme: jekyll-theme-leap-day
+
+
+scholar:
+
+  last_name: YOUR_LAST_NAME
+  first_name: YOUR_FIRST_NAME
+
+  style: apa
+  locale: en
+
+  sort_by: year
+  order: descending
+
+  source: /_bibliography/
+  bibliography: papers.bib
+  bibliography_template: bib
+
+  replace_strings: true
+  join_strings: true
+
+  details_dir: bibliography
+  details_layout: bibtex.html
+  details_link: Details
+
+  query: "@*"
+

@@ -5,9 +5,10 @@ permalink: /Research/
 order: 3
 ---
 
-Working papers (not yet in conferences, journals, etc.)
+Working papers / preprints (not yet in conferences, journals, etc.)
 ==============
-- <a href="/assets/preprints/2020-11-11-implicit-bias.pdf">Implicit bias of any algorithm: bounding bias via margin</a> (preprint)
+- <a href="/assets/preprints/2020-11-11-implicit-bias.pdf">Implicit bias of any algorithm: bounding bias via margin</a>
+- <a href="https://arxiv.org/abs/2006.09989">Classifier-independent Lower-Bounds for Adversarial Robustness</a>
 
 
 Publications

@@ -20,7 +20,7 @@ I also have an interest in privacy and fairness in machine learning.
 
 ## Supervision roles
 
-### Current students
+### Current students (Concordia University + Mila)
 - **Baye Malick Gning** — PhD student, 2026 – present
 - **Mark-Anthony Moisescu-Pareja** — MSc student, 2025 – present
 - **Julian Enoch** — PhD student, 2025 – present

@@ -26,19 +26,33 @@ random matrix theory / free probability, privacy and fairness in machine learnin
 as well as theoretical aspects of deep learning more broadly.
 </p>
 
-<!-- Optional CV link (uncomment if desired)
-<p>
-You can find my CV <a href="https://drive.google.com/file/d/0B-njZxsmwjYNRExmaFJxU3J6aEU/view?usp=sharing">here</a>.
-</p>
--->
-
-<div style="text-align: center; margin-top: 2em;">
-  <a class="twitter-timeline" 
-     data-height="450" 
-     data-width="450"
-     data-chrome="noscrollbar nofooter transparent"
-     href="https://x.com/dohmatobelvis">
-    Recent posts by @dohmatobelvis
+<!-- Recent posts from X -->
+<div style="text-align: center; margin: 2em auto; max-width: 550px;">
+  <a class="twitter-timeline"
+     href="https://x.com/dohmatobelvis"
+     data-width="500"
+     data-height="600"
+     data-theme="light"
+     data-chrome="noheader nofooter noborders transparent">
+    Posts by @dohmatobelvis
   </a>
 </div>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<script>
+  // Load the official X widgets script
+  window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+    return t;
+  }(document, "script", "twitter-wjs"));
+</script>

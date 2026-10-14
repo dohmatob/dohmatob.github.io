@@ -10,9 +10,11 @@ order: 3
 My research focuses on the following subjects:
 
 - Neural scaling laws
-- Optimization
-- ML phenomena (grokking, adversarial examples)
+- Less is More (data prunning, new architectures, etc.)
+- ML phenomena (grokking, adversarial examples, multiple-descent, model collapse, etc.)
+- Algorithmic fairness
 - Random Matrix Theory (especially applications of Free Probability to high-dimensional statistics)
+- Optimization
 
 I also have an interest in privacy and fairness in machine learning.
 
